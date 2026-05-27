@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Aaland Bil – Intranett</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;
+  --bg-alt:#f6f6f4;
+  --surface:#ffffff;
+  --surface-alt:#faf9f7;
+  --ink:#16181d;
+  --ink-2:#3f434c;
+  --muted:#71757f;
+  --faint:#9a9da6;
+  --line:#e7e6e2;
+  --line-2:#dddcd6;
+  --accent:#9c1f28;
+  --accent-soft:#f4e9e9;
+  --gold:#9a7b3f;
+  --ok:#2f7d4f;
+  --warn:#b9842b;
+  --dropdown:#10131a;
+  --radius:4px;
+  --radius-lg:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;font-size:15px;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+svg{display:block;}
+.serif{font-family:'Fraunces',Georgia,serif;}
+
+/* ============ TOPBAR ============ */
+.topbar{
+  background:var(--dropdown);color:#fff;height:64px;
+  display:flex;align-items:center;padding:0 28px;
+  position:sticky;top:0;z-index:100;
+}
+.topbar .brand{display:flex;align-items:center;width:230px;flex-shrink:0;}
+.topbar .brand img{height:30px;}
+.topbar nav{flex:1;display:flex;gap:2px;justify-content:center;}
+.topbar nav a{
+  padding:7px 15px;font-size:11.5px;font-weight:600;letter-spacing:0.13em;
+  text-transform:uppercase;color:rgba(255,255,255,0.6);border-radius:var(--radius);
+  transition:color .15s;
+}
+.topbar nav a:hover{color:#fff;}
+.topbar nav a.active{color:#fff;}
+.topbar .tb-right{display:flex;align-items:center;gap:8px;width:230px;justify-content:flex-end;flex-shrink:0;}
+.topbar .search{
+  display:flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);
+  border-radius:var(--radius);padding:7px 11px;width:170px;
+}
+.topbar .search svg{width:14px;height:14px;stroke:rgba(255,255,255,0.5);}
+.topbar .search input{
+  background:none;border:none;outline:none;color:#fff;font-size:12.5px;width:100%;font-family:inherit;
+}
+.topbar .search input::placeholder{color:rgba(255,255,255,0.4);}
+.topbar .avatar{
+  width:34px;height:34px;border-radius:50%;background:var(--accent);
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;
+  letter-spacing:0.04em;
+}
+
+/* ============ LAYOUT ============ */
+.layout{display:flex;}
+.sidebar{
+  width:248px;flex-shrink:0;background:var(--bg);
+  border-right:1px solid var(--line);
+  position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;
+  padding:22px 0 40px;
+}
+.sidebar::-webkit-scrollbar{width:5px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:3px;}
+.sidebar .grp{
+  font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--faint);padding:20px 26px 8px;
+}
+.sidebar .grp:first-child{padding-top:4px;}
+.sidebar a.nav{
+  display:flex;align-items:center;gap:12px;padding:8px 26px;
+  font-size:13.5px;font-weight:500;color:var(--ink-2);
+  border-left:2px solid transparent;transition:background .12s,color .12s;
+}
+.sidebar a.nav:hover{background:var(--bg-alt);color:var(--ink);}
+.sidebar a.nav.active{
+  border-left-color:var(--accent);color:var(--accent);font-weight:600;
+  background:var(--accent-soft);
+}
+.sidebar a.nav svg{width:17px;height:17px;flex-shrink:0;stroke:currentColor;}
+
+.main{flex:1;min-width:0;padding:34px 44px 90px;max-width:1280px;}
+
+/* ============ EYEBROW + HEADINGS ============ */
+.eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:10px;display:block;
+}
+.page-head{margin-bottom:28px;padding-bottom:0;}
+.page-head h1{
+  font-family:'Fraunces',Georgia,serif;font-size:38px;font-weight:600;
+  letter-spacing:-0.01em;line-height:1.1;color:var(--ink);
+}
+.page-head p{color:var(--muted);font-size:15px;margin-top:10px;max-width:620px;}
+
+.sec-head{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line);
+}
+.sec-head h2{
+  font-family:'Fraunces',Georgia,serif;font-size:21px;font-weight:600;
+  letter-spacing:-0.01em;color:var(--ink);
+}
+.sec-head .meta{font-size:11px;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:var(--faint);}
+.sec-head a{font-size:12.5px;font-weight:600;color:var(--accent);}
+
+/* ============ CAMPAIGN CAROUSEL ============ */
+.campaigns{
+  position:relative;border-radius:var(--radius-lg);overflow:hidden;
+  margin-bottom:36px;height:430px;background:#10131a;
+}
+.slide{
+  position:absolute;inset:0;opacity:0;transition:opacity 1s ease;
+  display:flex;align-items:flex-end;background-size:cover;background-position:center;
+}
+.slide.active{opacity:1;z-index:1;}
+.slide::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(100deg, rgba(16,19,26,0.95) 0%, rgba(16,19,26,0.7) 38%, rgba(16,19,26,0.1) 72%, transparent 100%);
+}
+.slide-inner{position:relative;z-index:2;padding:46px 54px;max-width:600px;color:#fff;}
+.slide-eyebrow{
+  font-size:10.5px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(255,255,255,0.7);margin-bottom:14px;
+  display:flex;align-items:center;gap:9px;
+}
+.slide-eyebrow::before{content:'';width:24px;height:1px;background:var(--accent);}
+.slide-inner h2{
+  font-family:'Fraunces',Georgia,serif;font-size:40px;font-weight:600;
+  line-height:1.06;letter-spacing:-0.015em;margin-bottom:12px;
+}
+.slide-inner p{font-size:14px;color:rgba(255,255,255,0.78);max-width:440px;margin-bottom:22px;line-height:1.55;}
+.slide-offers{display:flex;gap:0;margin-bottom:24px;border:1px solid rgba(255,255,255,0.16);border-radius:var(--radius);overflow:hidden;width:fit-content;}
+.offer{padding:11px 20px;border-right:1px solid rgba(255,255,255,0.16);}
+.offer:last-child{border-right:none;}
+.offer .ol{font-size:9.5px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:rgba(255,255,255,0.55);}
+.offer .ov{font-size:16px;font-weight:700;margin-top:3px;}
+.offer.hl{background:var(--accent);}
+.offer.hl .ol{color:rgba(255,255,255,0.8);}
+.slide-cta{display:flex;gap:10px;}
+.slide-cta a{
+  padding:10px 20px;font-size:12px;font-weight:700;letter-spacing:0.06em;
+  text-transform:uppercase;border-radius:var(--radius);transition:all .15s;
+}
+.slide-cta a.primary{background:#fff;color:var(--ink);}
+.slide-cta a.primary:hover{background:var(--accent);color:#fff;}
+.slide-cta a.line{border:1px solid rgba(255,255,255,0.3);color:#fff;}
+.slide-cta a.line:hover{background:rgba(255,255,255,0.1);}
+.car-dots{position:absolute;bottom:30px;left:54px;z-index:5;display:flex;gap:7px;}
+.car-dots .d{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;transition:all .25s;}
+.car-dots .d.active{background:#fff;width:24px;border-radius:4px;}
+.car-nav{position:absolute;bottom:26px;right:54px;z-index:5;display:flex;gap:8px;}
+.car-nav button{
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);
+  color:#fff;display:flex;align-items:center;justify-content:center;transition:all .15s;
+}
+.car-nav button:hover{background:#fff;color:var(--ink);}
+.car-nav svg{width:15px;height:15px;stroke:currentColor;}
+.car-bar{position:absolute;top:0;left:0;height:2px;background:var(--accent);z-index:6;width:0;}
+
+/* ============ WELCOME ROW ============ */
+.welcome{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;gap:20px;flex-wrap:wrap;
+}
+.welcome h1{font-family:'Fraunces',Georgia,serif;font-size:27px;font-weight:600;letter-spacing:-0.01em;}
+.welcome .sub{font-size:13px;color:var(--muted);margin-top:3px;}
+.welcome .actions{display:flex;gap:9px;}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;padding:9px 17px;
+  font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+  border-radius:var(--radius);transition:all .15s;border:1px solid transparent;
+}
+.btn svg{width:14px;height:14px;stroke:currentColor;}
+.btn.primary{background:var(--accent);color:#fff;}
+.btn.primary:hover{background:#7d1820;}
+.btn.dark{background:var(--dropdown);color:#fff;}
+.btn.dark:hover{background:#2a2e38;}
+.btn.line{border-color:var(--line-2);color:var(--ink-2);background:var(--surface);}
+.btn.line:hover{border-color:var(--ink-2);background:var(--bg-alt);}
+.btn.sm{padding:6px 11px;font-size:11px;}
+
+/* ============ INFO BAR ============ */
+.infobar{
+  display:flex;gap:0;border:1px solid var(--line);border-radius:var(--radius-lg);
+  margin-bottom:30px;overflow:hidden;
+}
+.infobar .ib{
+  flex:1;padding:14px 20px;display:flex;align-items:center;gap:11px;
+  border-right:1px solid var(--line);
+}
+.infobar .ib:last-child{border-right:none;}
+.infobar .ib svg{width:17px;height:17px;stroke:var(--accent);flex-shrink:0;}
+.infobar .ib .l{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--faint);}
+.infobar .ib .v{font-size:13px;font-weight:600;color:var(--ink);}
+
+/* ============ GRID ============ */
+.grid{display:grid;gap:14px;}
+.g2{grid-template-columns:repeat(2,1fr);}
+.g3{grid-template-columns:repeat(3,1fr);}
+.g4{grid-template-columns:repeat(4,1fr);}
+@media(max-width:1080px){.g4{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:760px){.g2,.g3,.g4{grid-template-columns:1fr;}}
+
+/* ============ TILE (quick access) ============ */
+.tile{
+  border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px;
+  background:var(--surface);cursor:pointer;transition:border-color .15s,background .15s;
+  display:flex;flex-direction:column;gap:11px;
+}
+.tile:hover{border-color:var(--line-2);background:var(--surface-alt);}
+.tile .ico{
+  width:34px;height:34px;border-radius:var(--radius);background:var(--accent-soft);
+  display:flex;align-items:center;justify-content:center;
+}
+.tile .ico svg{width:18px;height:18px;stroke:var(--accent);}
+.tile h3{font-size:13.5px;font-weight:700;}
+.tile p{font-size:12px;color:var(--muted);line-height:1.45;}
+
+/* ============ DEPT ============ */
+.dept{
+  border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px;
+  background:var(--surface);cursor:pointer;transition:border-color .15s;
+  position:relative;
+}
+.dept:hover{border-color:var(--ink);}
+.dept .no{
+  font-family:'Fraunces',Georgia,serif;font-size:13px;color:var(--faint);
+  font-weight:600;letter-spacing:0.04em;
+}
+.dept h3{font-size:17px;font-weight:700;margin:9px 0 6px;}
+.dept p{font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:14px;}
+.dept .ct{
+  font-size:10.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--faint);display:flex;gap:14px;padding-top:12px;border-top:1px solid var(--line);
+}
+.dept .arrow{position:absolute;top:22px;right:22px;opacity:0;transition:opacity .15s;}
+.dept:hover .arrow{opacity:1;}
+.dept .arrow svg{width:18px;height:18px;stroke:var(--ink);}
+
+/* ============ KPI ============ */
+.kpi{border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 20px;background:var(--surface);}
+.kpi .kl{font-size:10.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--faint);}
+.kpi .kv{font-family:'Fraunces',Georgia,serif;font-size:34px;font-weight:600;line-height:1.1;margin-top:8px;letter-spacing:-0.01em;}
+.kpi .kd{font-size:11.5px;color:var(--muted);margin-top:5px;}
+.kpi .kd.up{color:var(--ok);}
+.kpi .kd.down{color:var(--accent);}
+
+/* ============ CARD ============ */
+.card{border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px;background:var(--surface);}
+.card h3.ct{font-family:'Fraunces',Georgia,serif;font-size:17px;font-weight:600;margin-bottom:14px;}
+.card .lbl{font-size:11px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--faint);margin:16px 0 8px;}
+.card .lbl:first-child{margin-top:0;}
+.card ul,.card ol{margin:6px 0 6px 20px;}
+.card li{font-size:13.5px;color:var(--ink-2);margin-bottom:5px;}
+.card p{font-size:13.5px;color:var(--ink-2);}
+
+/* ============ NEWS ============ */
+.news{display:flex;gap:15px;padding:15px 0;border-bottom:1px solid var(--line);}
+.news:last-child{border-bottom:none;padding-bottom:0;}
+.news:first-child{padding-top:0;}
+.news .date{
+  flex-shrink:0;width:46px;text-align:center;
+}
+.news .date .d{font-family:'Fraunces',Georgia,serif;font-size:22px;font-weight:600;line-height:1;}
+.news .date .m{font-size:9.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);margin-top:3px;}
+.news .body .tg{font-size:9.5px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--accent);}
+.news .body h4{font-size:14px;font-weight:700;margin:3px 0;}
+.news .body p{font-size:12.5px;color:var(--muted);}
+
+/* ============ TABLE ============ */
+table.tbl{width:100%;border-collapse:collapse;}
+table.tbl th{
+  text-align:left;padding:9px 12px;font-size:10px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);
+  border-bottom:1px solid var(--line-2);
+}
+table.tbl td{padding:11px 12px;font-size:13px;border-bottom:1px solid var(--line);color:var(--ink-2);}
+table.tbl tr:last-child td{border-bottom:none;}
+table.tbl tr:hover td{background:var(--surface-alt);}
+.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10.5px;font-weight:700;letter-spacing:0.04em;}
+.pill.ok{background:#e8f1ec;color:var(--ok);}
+.pill.wn{background:#f6eedd;color:var(--warn);}
+.pill.dn{background:var(--accent-soft);color:var(--accent);}
+
+/* ============ ROUTINE ============ */
+.rt{border:1px solid var(--line);border-radius:var(--radius-lg);margin-bottom:9px;background:var(--surface);overflow:hidden;}
+.rt-h{padding:15px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.rt-h:hover{background:var(--surface-alt);}
+.rt-h .rt-t{font-size:14px;font-weight:700;}
+.rt-h .rt-m{font-size:10.5px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--faint);margin-top:5px;}
+.rt-h .rt-x{width:26px;height:26px;border:1px solid var(--line-2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.rt-h .rt-x svg{width:13px;height:13px;stroke:var(--ink-2);transition:transform .2s;}
+.rt.open .rt-x{background:var(--accent);border-color:var(--accent);}
+.rt.open .rt-x svg{stroke:#fff;transform:rotate(180deg);}
+.rt-b{display:none;padding:4px 20px 20px;}
+.rt.open .rt-b{display:block;}
+.rt-b .lbl{font-size:10.5px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--accent);margin:16px 0 7px;}
+.rt-b p,.rt-b li{font-size:13.5px;color:var(--ink-2);}
+.rt-b ol,.rt-b ul{margin:6px 0 8px 20px;}
+.rt-b li{margin-bottom:5px;}
+.tag{display:inline-block;padding:1px 8px;border-radius:20px;font-size:9.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:#e8f1ec;color:var(--ok);margin-left:7px;}
+
+/* ============ FORM ============ */
+.frow{display:grid;grid-template-columns:175px 1fr;gap:13px;margin-bottom:12px;align-items:start;}
+.frow label{font-size:12.5px;font-weight:600;color:var(--ink-2);padding-top:9px;}
+.frow input,.frow select,.frow textarea{
+  width:100%;padding:9px 12px;border:1px solid var(--line-2);border-radius:var(--radius);
+  font-family:inherit;font-size:13px;color:var(--ink);outline:none;transition:border-color .15s;
+}
+.frow input:focus,.frow select:focus,.frow textarea:focus{border-color:var(--accent);}
+.frow textarea{min-height:80px;resize:vertical;}
+
+/* ============ TOOLBAR ============ */
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+
+/* ============ STEPS ============ */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+@media(max-width:760px){.steps{grid-template-columns:1fr;}}
+.step .sn{font-family:'Fraunces',Georgia,serif;font-size:26px;font-weight:600;color:var(--accent);}
+.step h4{font-size:13.5px;font-weight:700;margin:5px 0 4px;}
+.step p{font-size:12px;color:var(--muted);line-height:1.5;}
+
+/* ============ LINKLIST ============ */
+.lk{display:flex;align-items:center;gap:13px;padding:13px 16px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);transition:border-color .15s;}
+.lk:hover{border-color:var(--ink);}
+.lk .lki{width:36px;height:36px;border-radius:var(--radius);background:var(--bg-alt);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.lk .lki svg{width:17px;height:17px;stroke:var(--ink-2);}
+.lk .lkt b{display:block;font-size:13.5px;font-weight:700;}
+.lk .lkt span{font-size:11.5px;color:var(--muted);}
+.lk .lka{margin-left:auto;}
+.lk .lka svg{width:15px;height:15px;stroke:var(--faint);}
+
+/* ============ BRANDS ============ */
+.brands{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;}
+@media(max-width:760px){.brands{grid-template-columns:repeat(3,1fr);}}
+.brands .b{background:var(--surface);height:62px;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;letter-spacing:0.1em;color:var(--ink-2);}
+
+/* ============ NOTE ============ */
+.note{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--radius);padding:15px 18px;background:var(--surface-alt);}
+.note h3{font-size:13px;font-weight:700;margin-bottom:5px;}
+.note p{font-size:12.5px;color:var(--muted);}
+
+/* ============ TIMELINE ============ */
+.tl{border-left:2px solid var(--line-2);padding-left:20px;margin-left:6px;}
+.tl .ev{position:relative;padding-bottom:18px;}
+.tl .ev:last-child{padding-bottom:0;}
+.tl .ev::before{content:'';position:absolute;left:-27px;top:3px;width:11px;height:11px;border-radius:50%;background:#fff;border:2px solid var(--accent);}
+.tl .ev .tt{font-size:13.5px;font-weight:700;}
+.tl .ev .td{font-size:12.5px;color:var(--muted);margin-top:2px;}
+
+/* ============ EDIT ============ */
+.editable{outline:none;border-radius:2px;}
+.editable[contenteditable=true]{background:#fdf6e3;box-shadow:0 0 0 1px var(--warn);}
+#saved{position:fixed;bottom:22px;right:22px;background:var(--ok);color:#fff;padding:10px 18px;border-radius:var(--radius);font-size:12.5px;font-weight:600;display:none;z-index:200;}
+
+/* ============ SECTIONS ============ */
+section{display:none;}
+section.active{display:block;animation:fade .25s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ============ COLORBLOCK (parking) ============ */
+.cblock{border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;}
+.cblock .ch{padding:14px 18px;display:flex;align-items:center;gap:11px;}
+.cblock .ch .sw{width:22px;height:22px;border-radius:4px;flex-shrink:0;}
+.cblock .ch h3{font-size:14.5px;font-weight:700;}
+.cblock .cb{padding:4px 18px 16px;}
+.cblock .cb li{font-size:13px;color:var(--ink-2);margin-bottom:4px;}
+
+/* ============ FOOTER ============ */
+.footer{margin-top:54px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer .fi b{font-size:12.5px;}
+.footer .fi span,.footer .fv{font-size:11.5px;color:var(--faint);}
+
+@media(max-width:1080px){.topbar nav{display:none;}}
+@media(max-width:760px){
+  .sidebar{display:none;}
+  .main{padding:22px 18px 70px;}
+  .topbar{padding:0 16px;}
+  .topbar .brand,.topbar .tb-right{width:auto;}
+  .topbar .search{display:none;}
+  .infobar{flex-direction:column;}
+  .infobar .ib{border-right:none;border-bottom:1px solid var(--line);}
+  .frow{grid-template-columns:1fr;}
+  .campaigns{height:380px;}
+  .slide-inner{padding:30px;}
+  .slide-inner h2{font-size:28px;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="#" data-sec="forside" class="brand"><img src="assets/aaland_logo.svg" alt="Aaland Bil"></a>
+  <nav>
+    <a href="#" data-sec="forside" class="active">Forside</a>
+    <a href="#" data-sec="salg">Salg</a>
+    <a href="#" data-sec="kundemottak">Service</a>
+    <a href="#" data-sec="verksted">Verksted</a>
+    <a href="#" data-sec="delelager">Delelager</a>
+    <a href="#" data-sec="elbil">Elbil</a>
+    <a href="#" data-sec="generell-info">Generell info</a>
+  </nav>
+  <div class="tb-right">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="search" placeholder="Søk">
+    </div>
+    <div class="avatar">PA</div>
+  </div>
+</header>
+
+<div class="layout">
+
+<aside class="sidebar" id="sidebar"></aside>
+
+<main class="main">
+
+<!-- ============ FORSIDE ============ -->
+<section id="forside" class="active">
+  <div class="campaigns" id="carousel">
+    <div class="car-bar" id="carbar"></div>
+
+    <div class="slide active" data-img="https://images.squarespace-cdn.com/content/v1/552434e7e4b0bab74e8bbd63/b69c3e1c-cedb-4f88-827c-6ca57fa56167/_5C_8511-Edit.jpg">
+      <div class="slide-inner">
+        <div class="slide-eyebrow">MG · Elektrisk SUV</div>
+        <h2>MG S5 EV Long Range</h2>
+        <p>Elektrisk SUV med opptil 480 km WLTP rekkevidde, Apple CarPlay, oppvarmet ratt og klasseledende plass.</p>
+        <div class="slide-offers">
+          <div class="offer hl"><div class="ol">Pris fra</div><div class="ov">289 900,–</div></div>
+          <div class="offer"><div class="ol">Kampanjerente</div><div class="ov">0,00 %</div></div>
+          <div class="offer"><div class="ol">Eller utstyr</div><div class="ov">20 000,–</div></div>
+        </div>
+        <div class="slide-cta">
+          <a class="primary" href="https://www.aaland.no/mgs5-ev" target="_blank">Se modellen</a>
+          <a class="line" href="#" data-sec="kampanjer">Alle kampanjer</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-img="https://images.squarespace-cdn.com/content/v1/552434e7e4b0bab74e8bbd63/725f97ab-1962-4984-aef5-20eb2f696942/im6-2-scaled-aspect-ratio-1836-1087-1900x1125.jpg">
+      <div class="slide-inner">
+        <div class="slide-eyebrow">MG · Intelligent SUV</div>
+        <h2>MG IM6</h2>
+        <p>Helelektrisk, intelligent SUV som kombinerer imponerende kraft og banebrytende teknologi i et elegant og dynamisk design.</p>
+        <div class="slide-offers">
+          <div class="offer hl"><div class="ol">Kampanjerente</div><div class="ov">0,00 %</div></div>
+          <div class="offer"><div class="ol">Eller utstyr</div><div class="ov">30 000,–</div></div>
+        </div>
+        <div class="slide-cta">
+          <a class="primary" href="https://www.aaland.no/mg-im6" target="_blank">Se modellen</a>
+          <a class="line" href="#" data-sec="kampanjer">Alle kampanjer</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-img="https://images.squarespace-cdn.com/content/v1/552434e7e4b0bab74e8bbd63/61de87a3-e28d-4033-8add-76721c64d746/im5-safety-slider-11-1900x1069.jpg">
+      <div class="slide-inner">
+        <div class="slide-eyebrow">MG · Luxury EV</div>
+        <h2>MG IM5</h2>
+        <p>Tidløs design, intelligent teknologi og kraftfulle ytelser. Smidig og stillegående med avanserte førerassistentsystemer.</p>
+        <div class="slide-offers">
+          <div class="offer hl"><div class="ol">Kampanjerente</div><div class="ov">1,99 %</div></div>
+          <div class="offer"><div class="ol">Eller utstyr</div><div class="ov">20 000,–</div></div>
+        </div>
+        <div class="slide-cta">
+          <a class="primary" href="https://www.aaland.no/mg-im5" target="_blank">Se modellen</a>
+          <a class="line" href="#" data-sec="kampanjer">Alle kampanjer</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-img="https://images.squarespace-cdn.com/content/v1/552434e7e4b0bab74e8bbd63/92bad6f2-b979-4ca6-871b-34656427903a/MG4Header-YouTube.png">
+      <div class="slide-inner">
+        <div class="slide-eyebrow">MG · Kompaktbil</div>
+        <h2>MG 4 Electric</h2>
+        <p>Intelligent, dynamisk og romslig kompaktbil med inntil 450 km WLTP rekkevidde og smart teknologi.</p>
+        <div class="slide-offers">
+          <div class="offer hl"><div class="ol">Kampanjerente</div><div class="ov">0,00 %</div></div>
+          <div class="offer"><div class="ol">Inkludert</div><div class="ov">Vinterhjul</div></div>
+        </div>
+        <div class="slide-cta">
+          <a class="primary" href="https://www.aaland.no/mg4-kampanje" target="_blank">Se modellen</a>
+          <a class="line" href="#" data-sec="kampanjer">Alle kampanjer</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-img="https://images.squarespace-cdn.com/content/v1/552434e7e4b0bab74e8bbd63/82e02950-cef2-4b50-9fbb-6e1a68d3333a/Nouvelle-Opel-Corsa-design-exterieur-1.jpg">
+      <div class="slide-inner">
+        <div class="slide-eyebrow">Opel · Elektrisk</div>
+        <h2>Opel Corsa Electric</h2>
+        <p>Storbilteknologi i kompakt format. 156 hk, opptil 402 km rekkevidde og hurtiglading inntil 100 kW.</p>
+        <div class="slide-offers">
+          <div class="offer hl"><div class="ol">Pris fra</div><div class="ov">344 900,–</div></div>
+          <div class="offer"><div class="ol">Fastrente 3 år</div><div class="ov">2,99 %</div></div>
+          <div class="offer"><div class="ol">Rekkevidde</div><div class="ov">402 km</div></div>
+        </div>
+        <div class="slide-cta">
+          <a class="primary" href="https://www.aaland.no/opelcorsaelectric" target="_blank">Se modellen</a>
+          <a class="line" href="#" data-sec="kampanjer">Alle kampanjer</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-img="https://images.squarespace-cdn.com/content/v1/552434e7e4b0bab74e8bbd63/950f470f-c227-44c7-a1be-52381c8f06a6/offroad-1900x1059.jpg">
+      <div class="slide-inner">
+        <div class="slide-eyebrow">Subaru · Elektrisk SUV</div>
+        <h2>Subaru Solterra</h2>
+        <p>Subarus helelektriske SUV med symmetrisk firehjulstrekk, X-Mode for terreng og ekte Subaru-kvalitet.</p>
+        <div class="slide-offers">
+          <div class="offer hl"><div class="ol">Drivlinje</div><div class="ov">e-AWD</div></div>
+          <div class="offer"><div class="ol">Type</div><div class="ov">Elektrisk</div></div>
+        </div>
+        <div class="slide-cta">
+          <a class="primary" href="https://www.aaland.no/subaru-solterra" target="_blank">Se modellen</a>
+          <a class="line" href="#" data-sec="kampanjer">Alle kampanjer</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="car-dots" id="dots"></div>
+    <div class="car-nav">
+      <button onclick="prevSlide()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button onclick="nextSlide()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+  </div>
+
+  <div class="welcome">
+    <div>
+      <h1>God morgen, Petter</h1>
+      <div class="sub">Torsdag 21. mai 2026 — 7 åpne avvik, 5 leads venter på oppfølging</div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="#" data-sec="avvik-meld">Meld avvik</a>
+      <a class="btn dark" href="#" data-sec="systemer">Mine systemer</a>
+    </div>
+  </div>
+
+  <div class="infobar">
+    <div class="ib"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s-7-5.2-7-11a7 7 0 1114 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><div><div class="l">Adresse</div><div class="v">Brusdalsvegen 205, Ålesund</div></div></div>
+    <div class="ib"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 1.9.6 2.8a2 2 0 01-.5 2.1L8 11a16 16 0 006 6l1.4-1.1a2 2 0 012.1-.5c.9.3 1.8.5 2.8.6a2 2 0 011.7 2z"/></svg><div><div class="l">Sentralbord</div><div class="v">70 15 86 00</div></div></div>
+    <div class="ib"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><div><div class="l">Åpningstider</div><div class="v">Man–fre 08–18 · Lør 10–15</div></div></div>
+    <div class="ib"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg><div><div class="l">Hjemmeside</div><div class="v">aaland.no</div></div></div>
+  </div>
+
+  <div class="sec-head"><h2>Hurtigvalg</h2><span class="meta">Mine snarveier</span></div>
+  <div class="grid g4" id="quicktiles"></div>
+
+  <div class="sec-head"><h2>Avdelinger</h2><span class="meta">Rutiner og verktøy</span></div>
+  <div class="grid g4">
+    <div class="dept" onclick="show('salg')">
+      <div class="no">01</div><h3>Salg</h3>
+      <p>Nybil og bruktbil — alle våre merker, fra lead til levering.</p>
+      <div class="ct"><span>7 rutiner</span><span>3 maler</span></div>
+      <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+    </div>
+    <div class="dept" onclick="show('kundemottak')">
+      <div class="no">02</div><h3>Kundemottak</h3>
+      <p>Service og servicerådgivere — timebestilling, innlevering, dialog.</p>
+      <div class="ct"><span>9 rutiner</span><span>5 maler</span></div>
+      <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+    </div>
+    <div class="dept" onclick="show('verksted')">
+      <div class="no">03</div><h3>Verksted</h3>
+      <p>Reparasjon, EU-kontroll, garantisaker og dokumentasjon.</p>
+      <div class="ct"><span>8 rutiner</span><span>4 maler</span></div>
+      <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+    </div>
+    <div class="dept" onclick="show('delelager')">
+      <div class="no">04</div><h3>Delelager</h3>
+      <p>Bestilling, varemottak, lagerstyring og ekspedisjon over disk.</p>
+      <div class="ct"><span>6 rutiner</span><span>3 maler</span></div>
+      <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+    </div>
+  </div>
+
+  <div class="sec-head"><h2>Våre bilmerker</h2><span class="meta">Autoriserte forhandlerskap</span></div>
+  <div class="brands">
+    <div class="b">MG</div><div class="b">OPEL</div><div class="b">CITROËN</div>
+    <div class="b">SUBARU</div><div class="b">JEEP</div><div class="b">FIAT</div><div class="b">PÖSSL</div>
+  </div>
+
+  <div class="sec-head"><h2>Måned til dato</h2><span class="meta">Mai 2026</span></div>
+  <div class="grid g4">
+    <div class="kpi"><div class="kl">Leads under 30 min</div><div class="kv">94 %</div><div class="kd up">+6 % mot forrige måned</div></div>
+    <div class="kpi"><div class="kl">Solgte biler</div><div class="kv">87</div><div class="kd up">+12 mot forrige måned</div></div>
+    <div class="kpi"><div class="kl">Åpne avvik</div><div class="kv">12</div><div class="kd down">+3 mot forrige måned</div></div>
+    <div class="kpi"><div class="kl">Kundetilfredshet</div><div class="kv">4,7</div><div class="kd">av 5,0 mulige</div></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:24px;">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;">
+        <h3 class="ct" style="margin:0;">Siste nytt</h3>
+        <a href="#" data-sec="nyheter" style="font-size:12px;font-weight:600;color:var(--accent);">Se alle</a>
+      </div>
+      <div class="news"><div class="date"><div class="d">21</div><div class="m">Mai</div></div><div class="body"><div class="tg">Ledelsen</div><h4>Intranettet er oppdatert</h4><p>Ny elbil-seksjon, generell info og Teams-integrasjon er på plass.</p></div></div>
+      <div class="news"><div class="date"><div class="d">05</div><div class="m">Mai</div></div><div class="body"><div class="tg">Salg</div><h4>Ny rutine for leadshåndtering</h4><p>Alle leads skal kontaktes innen 30 minutter. Se rutine SAL-01.</p></div></div>
+      <div class="news"><div class="date"><div class="d">02</div><div class="m">Mai</div></div><div class="body"><div class="tg">HMS</div><h4>Vernerunde gjennomført</h4><p>Fire tiltak registrert i avvikssystemet.</p></div></div>
+    </div>
+    <div class="card">
+      <h3 class="ct">Kommende</h3>
+      <table class="tbl">
+        <tr><td style="width:70px;font-weight:700;color:var(--ink);">22. mai</td><td>Allmøte kl. 08:00 i kantinen</td></tr>
+        <tr><td style="font-weight:700;color:var(--ink);">26. mai</td><td>HMS-kurs for nyansatte</td></tr>
+        <tr><td style="font-weight:700;color:var(--ink);">28. mai</td><td>Internrevisjon kvalitetssystem</td></tr>
+        <tr><td style="font-weight:700;color:var(--ink);">1. jun</td><td>Sommerfest — påmelding via HR</td></tr>
+        <tr><td style="font-weight:700;color:var(--ink);">15. jun</td><td>Subaru-fagdag hos importør</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KAMPANJER ============ -->
+<section id="kampanjer">
+  <div class="page-head"><span class="eyebrow">Aktive kampanjer</span><h1>Kampanjer akkurat nå</h1><p>Hentet fra aaland.no. Kontroller alltid gjeldende vilkår og sluttdatoer hos importør før tilbud sendes til kunde.</p></div>
+  <div class="grid g3" id="kampanjegrid"></div>
+  <p style="margin-top:16px;font-size:12px;color:var(--faint);">Kampanjer kan endres uten varsel.</p>
+</section>
+
+<!-- ============ NYHETER ============ -->
+<section id="nyheter">
+  <div class="page-head"><span class="eyebrow">Internt</span><h1>Nyheter</h1></div>
+  <div class="card">
+    <div class="news"><div class="date"><div class="d">21</div><div class="m">Mai</div></div><div class="body"><div class="tg">Ledelsen</div><h4>Intranettet er oppdatert</h4><p>Elbil-seksjon, generell informasjon og Teams-integrasjon er nå på plass.</p></div></div>
+    <div class="news"><div class="date"><div class="d">05</div><div class="m">Mai</div></div><div class="body"><div class="tg">Salg</div><h4>Ny rutine for leadshåndtering</h4><p>Alle leads skal kontaktes innen 30 minutter. Les rutine SAL-01.</p></div></div>
+    <div class="news"><div class="date"><div class="d">02</div><div class="m">Mai</div></div><div class="body"><div class="tg">HMS</div><h4>Vernerunde gjennomført</h4><p>Fire tiltak registrert i avvikssystemet.</p></div></div>
+    <div class="news"><div class="date"><div class="d">28</div><div class="m">Apr</div></div><div class="body"><div class="tg">HR</div><h4>Påmelding til sommerfest</h4><p>Sommerfest 1. juni — påmelding innen 20. mai.</p></div></div>
+  </div>
+</section>
+
+<!-- ============ SALG ============ -->
+<section id="salg">
+  <div class="page-head"><span class="eyebrow">Avdeling 01</span><h1>Salg</h1><p>Selger nye og brukte biler fra MG, Opel, Citroën, Subaru, Jeep, Fiat og Pössl.</p></div>
+  <div class="toolbar">
+    <button class="btn line" onclick="toggleEdit()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Rediger</button>
+    <button class="btn line" onclick="alert('Eksport-funksjon i produksjonsversjon.')">Eksporter</button>
+  </div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">SAL-01 — Håndtering av leads</div><div class="rt-m">Eier: Salgsleder · v2.1 · 05.05.2026<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><div class="lbl">Formål</div><p class="editable">Sikre rask og profesjonell oppfølging av alle leads, øke hit-rate og salgskonvertering, og skape lik praksis.</p><div class="lbl">Responstid</div><p class="editable">Alle leads skal kontaktes innen 30 minutter. Harvard Business Review viser at leads kontaktet innen 5 minutter er opptil 100 ganger mer sannsynlig kvalifisert.</p><div class="lbl">Første kontakt</div><ol class="editable"><li>SMS — personlig melding med referanse til kundens henvendelse og modell.</li><li>Ved manglende svar: ring og send e-post samme dag.</li><li>Ved fortsatt manglende kontakt: send avsluttende SMS.</li></ol><div class="lbl">Mål</div><ul class="editable"><li>100 % av leads kontaktet innen 30 minutter</li><li>Alle leads dokumentert i CRM</li></ul></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">SAL-02 — Kundemottak i utstilling</div><div class="rt-m">Eier: Salgsleder · v1.0<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Kunden hilses på innen 60 sekunder.</li><li>Selger presenterer seg med navn.</li><li>Behovsavklaring: biltype, bruksområde, drivlinje, budsjett.</li><li>Vis aktuell modell — fortell historie, demonstrer features.</li><li>Tilby prøvekjøring.</li><li>Innhent kontaktinfo i CRM.</li><li>Avtal videre oppfølging.</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">SAL-03 — Prøvekjøring</div><div class="rt-m">Eier: Salgsleder · v1.0<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><div class="lbl">Forberedelse</div><ol class="editable"><li>Kontroller at demobilen er ren, ladet/full tank.</li><li>Kopi av førerkort og signert prøvekjøringsavtale.</li></ol><div class="lbl">Etter</div><ol class="editable"><li>Sett deg ned med kunden og oppsummer.</li><li>Avklar finansiering, leasing, innbytte.</li><li>Lag konkret tilbud i CRM samme dag.</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">SAL-04 — Salgsprosess nybil</div><div class="rt-m">Eier: Salgsleder<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Behovsavklaring og modellvalg</li><li>Konfigurering i merkets bestillingsverktøy</li><li>Innbytteverdsettelse</li><li>Finansieringstilbud</li><li>Skriftlig tilbud signert digitalt</li><li>Bestilling i BOS CRM</li><li>Statusoppdatering hver 14. dag</li><li>Klargjøring og levering</li><li>Oppfølgingssamtale 7 dager etter</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">SAL-05 — Innbytte og verdsettelse</div><div class="rt-m">Eier: Bruktbilsjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Kontroller utstyr mot vognkort og servicehefte</li><li>Visuell sjekk: lakk, felger, interiør, dekkmønster</li><li>Prøvekjøring 5–10 min</li><li>Sjekk Autosys / Statens vegvesen</li><li>Verdsett etter intern matrise og Finn.no</li><li>Skriftlig innbyttetilbud med forbehold</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">SAL-06 — Salg av bruktbil</div><div class="rt-m">Eier: Bruktbilsjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Klargjøring og PKK-kontroll</li><li>Profesjonell fotografering, minst 20 bilder</li><li>Annonse på Finn.no innen 48 timer</li><li>Komplett bilbeskrivelse</li><li>Følg leadsrutine SAL-01</li><li>Kjøpekontrakt og omregistrering</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">SAL-07 — Klargjøring og levering</div><div class="rt-m">Eier: Salgsleder + Verksmester<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><div class="lbl">Klargjøring</div><ul class="editable"><li>PDI-sjekk etter merkets sjekkliste</li><li>Vask innvendig og utvendig</li><li>Tilbehør montert, app registrert</li><li>Full tank eller fulladet</li></ul><div class="lbl">Levering</div><ol class="editable"><li>Bilen står klar med sløyfe på ratt</li><li>30–45 minutters gjennomgang</li><li>Signering og foto</li><li>Bestill første service og send velkomst-SMS</li></ol><div class="lbl">Elbil</div><p class="editable">Ved levering av elbil: bruk overleveringsskjemaet SAL-08 og gi kunden kunde-Q&amp;A. Se Elbil-seksjonen.</p></div></div>
+  <div class="sec-head"><h2>Maler — salg</h2><span class="meta">Last ned</span></div>
+  <div class="grid g3">
+    <a class="lk" href="../08_Maler_og_skjemaer/Innbytteavtale_mal.docx"><div class="lki">@file</div><div class="lkt"><b>Innbytteavtale</b><span>Word-mal</span></div><div class="lka">@dl</div></a>
+    <a class="lk" href="../08_Maler_og_skjemaer/Provekjoringsavtale_mal.docx"><div class="lki">@file</div><div class="lkt"><b>Prøvekjøringsavtale</b><span>Word-mal</span></div><div class="lka">@dl</div></a>
+    <a class="lk" href="../08_Maler_og_skjemaer/Leveringsprotokoll_mal.docx"><div class="lki">@file</div><div class="lkt"><b>Leveringsprotokoll</b><span>Word-mal</span></div><div class="lka">@dl</div></a>
+  </div>
+</section>
+
+<!-- ============ KUNDEMOTTAK ============ -->
+<section id="kundemottak">
+  <div class="page-head"><span class="eyebrow">Avdeling 02</span><h1>Kundemottak</h1><p>Servicerådgivere — timebestilling, innlevering, utlevering og kundedialog.</p></div>
+  <div class="toolbar"><button class="btn line" onclick="toggleEdit()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Rediger</button></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">KM-01 — Timebestilling</div><div class="rt-m">Eier: Servicesjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Henvendelse mottas via telefon, e-post, web eller drop-in</li><li>Identifiser kunde og bil i Cars (regnr-søk)</li><li>Kartlegg behov</li><li>Sjekk garantistatus, kampanjer og servicehistorikk</li><li>Tilby ledig tid</li><li>Avtal lånebil ved behov</li><li>Send bekreftelses-SMS</li><li>Skriv ut arbeidsordre</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">KM-02 — Innlevering</div><div class="rt-m">Eier: Servicesjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Hent ut arbeidsordre før kunden ankommer</li><li>Hils kunden ved navn</li><li>Gå rundt bilen sammen — noter eksisterende skader</li><li>Bekreft hva som skal gjøres og forventet pris</li><li>Innhent samtykke til tilleggsarbeider</li><li>Spør om kunden venter eller trenger lånebil</li><li>Plasser nøkler i nøkkelskap</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">KM-03 — Utlevering</div><div class="rt-m">Eier: Servicesjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Kvalitetssjekk arbeidsordre og faktura når mekaniker melder ferdig</li><li>Send klar-til-henting-SMS senest kl. 12:00</li><li>Forbered faktura med spesifikasjon</li><li>Gå gjennom hva som er gjort med kunden</li><li>Forklar fakturaen post for post</li><li>Ta betaling</li><li>Avtal neste service</li><li>Send oppfølgings-SMS dagen etter</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">KM-04 — Flytting av time</div><div class="rt-m">Eier: Servicesjef · v1.1<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><div class="lbl">Steg for steg i Cars</div><ol class="editable"><li>Gå til timeavtalen i Cars</li><li>Høyreklikk og velg Klipp ut</li><li>Gå til ny ønsket dato og lim inn</li><li>Åpne ordre, skriv ut ny ordre</li><li>SMS tekst nr. 3 — rediger ny dato og send</li><li>SMS tekst nr. 6 — legg inn klokkeslett</li><li>Ta ut ordren fysisk fra skapet</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">KM-05 — Forsikringssaker</div><div class="rt-m">Eier: Servicesjef + Verksmester<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Lag ny arbeidsordre i Cars</li><li>Legg inn fastjobb F og NJ</li><li>Fyll ut alle punkter i sjekkliste F — kundens underskrift er vesentlig</li><li>Ta minst 5 bilder: regnr, servicehefte, km-stand, defekt del</li><li>Legg bilder i Teams-mappen forsikringssaker</li><li>Saken sendes til Knut Frisvoll eller Riemo Eisma (DBS)</li><li>Vent på godkjenning før reparasjon</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">KM-06 — Klagebehandling</div><div class="rt-m">Eier: Servicesjef + Kvalitetssjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Lytt aktivt</li><li>Anerkjenn følelsen, beklag opplevelsen</li><li>Still spørsmål for å forstå fakta</li><li>Registrer i avvikssystemet</li><li>Tilby konkret løsning innen 24 timer</li><li>Saker over 5 000 kr eskaleres</li><li>Lukk avvik når kunden bekrefter løst</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">KM-07 — Lånebil</div><div class="rt-m">Eier: Servicesjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ul class="editable"><li>Lånebil ved verkstedsbesøk over 4 timer</li><li>Kontroll av førerkort og signert låneavtale</li><li>Skriftlig info om kasko og egenandel (6 000 kr)</li><li>Bilens stand fotograferes ved utlevering</li></ul></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">KM-08 — Daglig morgenmøte</div><div class="rt-m">Eier: Servicesjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ul class="editable"><li>Hver morgen kl. 07:30, maks 15 minutter</li><li>Gjennomgang av timeplan</li><li>Avklaringer mellom servicerådgivere og verksmester</li><li>HMS-fokus for dagen</li></ul></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">KM-09 — Telefonbehandling</div><div class="rt-m">Eier: Servicesjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Svar innen tre ringesignaler</li><li>Aaland Bil, fornavn, hva kan jeg hjelpe med</li><li>Lytt aktivt og notér</li><li>Bekreft pris og tid skriftlig</li><li>Hold lovnaden om å ringe tilbake</li></ol></div></div>
+</section>
+
+<!-- ============ VERKSTED ============ -->
+<section id="verksted">
+  <div class="page-head"><span class="eyebrow">Avdeling 03</span><h1>Verksted</h1><p>Mekanikere og verksmester — reparasjon, EU-kontroll, garanti og dokumentasjon.</p></div>
+  <div class="toolbar"><button class="btn line" onclick="toggleEdit()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Rediger</button></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">VRK-01 — Jobbintak</div><div class="rt-m">Eier: Verksmester<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Hent arbeidsordre fra ordreskap eller Cars</li><li>Les ordren og sjekk garantistatus</li><li>Sjekk at alle deler er på plass</li><li>Stempel inn på ordren i Cars</li><li>Kjør bilen inn med setetrekk og rattbeskyttelse</li><li>Foto av km-stand og servicehefte</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">VRK-02 — EU-kontroll (PKK)</div><div class="rt-m">Eier: Verksmester<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Kontrollør må være godkjent</li><li>Bruk siste versjon av PKK-instruks</li><li>Foto av bilens identifikasjon</li><li>Gjennomgå sjekkliste i kontrollutstyret</li><li>Ved feil: dokumenter og informer kunde</li><li>Send rapport elektronisk til Statens vegvesen</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">VRK-03 — Garantisaker</div><div class="rt-m">Eier: Verksmester<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><p class="editable">Viktig: ved garantisaker må feilen være til stede eller dokumenteres med bilde/video. Kan vi ikke verifisere feilen, avvises garantien og kunde faktureres 1 time feilsøking (2 281 kr).</p><ol class="editable"><li>Bekreft garantistatus</li><li>Diagnose og dokumentasjon med bilde/video</li><li>Bestill garantideler</li><li>Defekte deler lagres og merkes</li><li>Garantikrav i merkets system innen 5 virkedager</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">VRK-04 — Tidsregistrering</div><div class="rt-m">Eier: Verksmester<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Stempel inn på arbeidsordre i Cars ved start</li><li>Stempel ut ved pause</li><li>Stempel inn igjen ved gjenopptak</li><li>Avvik over 30 % skal forklares</li><li>Stempel ferdig ved overlevering</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">VRK-05 — Reparasjonsdokumentasjon</div><div class="rt-m">Eier: Verksmester<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ul class="editable"><li>Tekstlig dokumentasjon i arbeidsordre: hva, metode, deler</li><li>Foto av kritiske trinn</li><li>Måleresultater loggføres med tall</li><li>Sikkerhetskritiske deler: fireøyne-prinsipp</li></ul></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">VRK-06 — Dekkskift og dekkhotell</div><div class="rt-m">Eier: Verksmester<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Kontroller dekkdimensjon</li><li>Mål mønsterdybde og informer kunde ved lav dybde</li><li>Bytt om eller balanser</li><li>Drei til riktig moment</li><li>Anbefal ettertrekking etter 100 km</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">VRK-07 — HMS i verksted</div><div class="rt-m">Eier: Verneombud<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ul class="editable"><li>Verneutstyr: vernebriller, hørselvern, vernesko, hansker</li><li>Heiser kontrolleres månedlig</li><li>Kjemikalier i godkjente skap</li><li>Brannrutiner gjennomgås kvartalsvis</li><li>Skader meldes umiddelbart</li></ul></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">VRK-08 — Sluttkontroll</div><div class="rt-m">Eier: Verksmester<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Sluttkontroll på alle jobber over 4 timer</li><li>Sjekk at bestilt arbeid er utført</li><li>Visuell kontroll: lekkasjer og festepunkter</li><li>Prøvekjøring 5 minutter</li><li>Lever ordre og nøkkel til kundemottak</li></ol></div></div>
+</section>
+
+<!-- ============ DELELAGER ============ -->
+<section id="delelager">
+  <div class="page-head"><span class="eyebrow">Avdeling 04</span><h1>Delelager</h1><p>Bestilling, varemottak, lagerstyring, retur og ekspedisjon over disk.</p></div>
+  <div class="toolbar"><button class="btn line" onclick="toggleEdit()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Rediger</button></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">DEL-01 — Bestilling av deler</div><div class="rt-m">Eier: Delesjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Sjekk lagerbeholdning i Cars</li><li>Identifiser delenummer via katalog</li><li>Velg leverandør: original før likeverdig før tredjepart</li><li>Registrer i Cars med kobling til arbeidsordre</li><li>Bekreft pris og leveringstid</li><li>Logg i bestillingslogg</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">DEL-02 — Varemottak</div><div class="rt-m">Eier: Delesjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Åpne pakke og tell innhold mot pakkseddel</li><li>Kontroller for transportskader</li><li>Skann delene inn i Cars</li><li>Deler bestilt til ordre legges på ordrehylle</li><li>Send SMS til kunde</li><li>Arkiver pakkseddel</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">DEL-03 — Ekspedisjon over disk</div><div class="rt-m">Eier: Delesjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Hils kunden og spør hva slags bil det gjelder</li><li>Søk opp bilen og verifiser delenummer</li><li>Vis del til kunden</li><li>Salg registreres i Cars</li><li>Be om kvittering ved retur</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">DEL-04 — Retur av deler</div><div class="rt-m">Eier: Delesjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Delen skal være ubrukt og i original emballasje</li><li>Verifiser kjøp i Cars</li><li>Kreditnota utstedes</li><li>Defekte garantideler dokumenteres med foto</li></ol></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">DEL-05 — Lagerstyring</div><div class="rt-m">Eier: Delesjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ul class="editable"><li>Stikkprøver kvartalsvis</li><li>Full inventering ved årsslutt</li><li>Differanser over 1 % skal forklares</li><li>Saktegående lager vurderes for retur</li></ul></div></div>
+  <div class="rt"><div class="rt-h" onclick="tr(this)"><div><div class="rt-t editable">DEL-06 — Internt uttak</div><div class="rt-m">Eier: Delesjef<span class="tag">Aktiv</span></div></div><div class="rt-x">@chev</div></div><div class="rt-b"><ol class="editable"><li>Mekaniker henter deler — uttak registreres mot arbeidsordre</li><li>Smådeler føres som tillegg</li><li>Ubrukte deler returneres samme dag</li><li>Spesialverktøy: signering av lånelogg</li></ol></div></div>
+</section>
+
+<!-- ============ ELBIL ============ -->
+<section id="elbil">
+  <div class="page-head"><span class="eyebrow">Salg &amp; verksted</span><h1>Elbil — overlevering</h1><p>Verktøy for en god elbil-overlevering: skjema, kunde-Q&amp;A og intern håndbok. Brukes sammen ved hver levering av elbil.</p></div>
+
+  <div class="grid g3">
+    <div class="card">
+      <span class="eyebrow">Dok. SAL-08</span>
+      <h3 class="ct" style="margin:6px 0 8px;">Overleveringsskjema</h3>
+      <p style="font-size:13px;color:var(--muted);">Signeres av selger og kunde ved levering. Sjekklister for utvendig og innvendig gjennomgang, ADAS, infotainment og lading.</p>
+      <div style="margin-top:14px;"><a class="btn primary sm" href="../12_Elbil_overlevering/SAL-08_Overleveringsskjema_elbil.docx">Last ned skjema</a></div>
+    </div>
+    <div class="card">
+      <span class="eyebrow">Dok. KUNDE-01</span>
+      <h3 class="ct" style="margin:6px 0 8px;">Kunde-Q&amp;A</h3>
+      <p style="font-size:13px;color:var(--muted);">Spørsmål og svar som gis til kunden ved levering — rekkevidde, lading, sensorer og merkespesifikke tips.</p>
+      <div style="margin-top:14px;"><a class="btn line sm" href="../12_Elbil_overlevering/KUNDE-01_QA_elbil.docx">Last ned Q&amp;A</a></div>
+    </div>
+    <div class="card">
+      <span class="eyebrow">Dok. HBOK-01</span>
+      <h3 class="ct" style="margin:6px 0 8px;">Håndbok elbil</h3>
+      <p style="font-size:13px;color:var(--muted);">Intern arbeidshåndbok for selgere og verksted — lading, vinterdrift, sensorer, 12V-batteri og varsellamper.</p>
+      <div style="margin-top:14px;"><a class="btn line sm" href="../12_Elbil_overlevering/HBOK-01_Handbok_elbil.docx">Last ned håndbok</a></div>
+    </div>
+  </div>
+
+  <div class="sec-head"><h2>Slik bruker du dokumentene</h2><span class="meta">Ved hver elbil-levering</span></div>
+  <div class="steps">
+    <div class="step"><div class="sn">1</div><h4>Forbered</h4><p>Les håndboken og fyll ut bil- og kundeopplysninger i overleveringsskjemaet.</p></div>
+    <div class="step"><div class="sn">2</div><h4>Gjennomgå</h4><p>Gå gjennom skjemaets sjekklister sammen med kunden og demonstrer på bilen.</p></div>
+    <div class="step"><div class="sn">3</div><h4>Signer</h4><p>Selger og kunde signerer skjemaet. Begge beholder en kopi.</p></div>
+    <div class="step"><div class="sn">4</div><h4>Gi med</h4><p>Kunden får kunde-Q&amp;A med hjem, samt kontaktinfo til verksted og veihjelp.</p></div>
+  </div>
+
+  <div class="sec-head"><h2>De fire vanligste «falske feilene»</h2><span class="meta">Fra håndboken</span></div>
+  <div class="grid g2">
+    <div class="card"><h3 class="ct" style="font-size:15px;">«Rekkevidden er for kort»</h3><p style="font-size:13px;color:var(--muted);">Nesten alltid kulde, fart og varmebruk — ikke en feil. WLTP er et laboratorietall.</p></div>
+    <div class="card"><h3 class="ct" style="font-size:15px;">«Bilen lader tregt»</h3><p style="font-size:13px;color:var(--muted);">Kaldt batteri eller ladenivå over 80 %. Ofte manglende forvarming.</p></div>
+    <div class="card"><h3 class="ct" style="font-size:15px;">«Førerassistanse virker ikke»</h3><p style="font-size:13px;color:var(--muted);">Tilsmussede sensorer og kamera. Løses ved rengjøring.</p></div>
+    <div class="card"><h3 class="ct" style="font-size:15px;">«Bilen er død»</h3><p style="font-size:13px;color:var(--muted);">Utladet 12V-batteri etter lang stillstand — ikke kjørebatteriet.</p></div>
+  </div>
+
+  <div class="note" style="margin-top:18px;">
+    <h3>Originaldokumenter</h3>
+    <p>Kildedokumentene er arkivert i mappen 12_Elbil_overlevering som _Original-filer.</p>
+  </div>
+</section>
+
+<!-- ============ AVVIK MELD ============ -->
+<section id="avvik-meld">
+  <div class="page-head"><span class="eyebrow">Kvalitet</span><h1>Meld avvik</h1><p>Avvik, kundeklager, nestenulykker eller forbedringsforslag. Alle meldinger behandles av kvalitetssjef.</p></div>
+  <div class="card">
+    <h3 class="ct">Avviksmelding</h3>
+    <form id="avvikForm" onsubmit="lagreAvvik(event)">
+      <div class="frow"><label>Dato</label><input type="date" required></div>
+      <div class="frow"><label>Meldt av</label><input type="text" placeholder="Navn (eller anonym)" required></div>
+      <div class="frow"><label>Avdeling</label><select required><option value="">Velg avdeling</option><option>Salg</option><option>Kundemottak</option><option>Verksted</option><option>Delelager</option><option>Administrasjon</option></select></div>
+      <div class="frow"><label>Type</label><select required><option value="">Velg type</option><option>HMS / personskade</option><option>Nestenulykke</option><option>Kundeklage</option><option>Kvalitetsavvik</option><option>Leverandøravvik</option><option>Brudd på rutine</option><option>Forbedringsforslag</option><option>Miljøavvik</option></select></div>
+      <div class="frow"><label>Alvorlighet</label><select required><option value="">Velg</option><option>1 — Lav</option><option>2 — Middels</option><option>3 — Høy</option><option>4 — Kritisk</option></select></div>
+      <div class="frow"><label>Tittel</label><input type="text" placeholder="Kort beskrivelse" required></div>
+      <div class="frow"><label>Hva skjedde</label><textarea required placeholder="Beskriv hendelsen"></textarea></div>
+      <div class="frow"><label>Mulig årsak</label><textarea placeholder="Hva tror du var årsaken"></textarea></div>
+      <div class="frow"><label>Forslag til tiltak</label><textarea placeholder="Hva kan vi gjøre annerledes"></textarea></div>
+      <div style="text-align:right;margin-top:14px;"><button type="submit" class="btn primary">Send avviksmelding</button></div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ AVVIK REGISTER ============ -->
+<section id="avvik-register">
+  <div class="page-head"><span class="eyebrow">Kvalitet</span><h1>Avviksregister</h1></div>
+  <div class="grid g4" style="margin-bottom:20px;">
+    <div class="kpi"><div class="kl">Åpne</div><div class="kv">7</div></div>
+    <div class="kpi"><div class="kl">Under behandling</div><div class="kv">5</div></div>
+    <div class="kpi"><div class="kl">Lukket i år</div><div class="kv">42</div></div>
+    <div class="kpi"><div class="kl">Snitt behandlingstid</div><div class="kv">8 d</div></div>
+  </div>
+  <div class="card">
+    <table class="tbl">
+      <tr><th>Nr</th><th>Dato</th><th>Type</th><th>Tittel</th><th>Avdeling</th><th>Alvor</th><th>Frist</th><th>Status</th></tr>
+      <tr><td>2026-018</td><td>10.05</td><td>HMS</td><td>Olje sølt på verkstedgulv</td><td>Verksted</td><td>2</td><td>15.05</td><td><span class="pill dn">Åpen</span></td></tr>
+      <tr><td>2026-017</td><td>09.05</td><td>Kundeklage</td><td>Bil ikke vasket etter service</td><td>Kundemottak</td><td>2</td><td>13.05</td><td><span class="pill wn">Under behandling</span></td></tr>
+      <tr><td>2026-016</td><td>08.05</td><td>Brudd rutine</td><td>Lead ikke kontaktet innen 30 min</td><td>Salg</td><td>1</td><td>11.05</td><td><span class="pill ok">Lukket</span></td></tr>
+      <tr><td>2026-015</td><td>06.05</td><td>Leverandør</td><td>Feil del levert</td><td>Delelager</td><td>2</td><td>14.05</td><td><span class="pill wn">Under behandling</span></td></tr>
+      <tr><td>2026-014</td><td>05.05</td><td>Forbedring</td><td>Bedre merking av nøkkelskap</td><td>Kundemottak</td><td>1</td><td>20.05</td><td><span class="pill dn">Åpen</span></td></tr>
+      <tr><td>2026-013</td><td>03.05</td><td>HMS</td><td>Førstehjelpsutstyr i utstilling</td><td>Salg</td><td>2</td><td>10.05</td><td><span class="pill ok">Lukket</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ ISO ============ -->
+<section id="iso">
+  <div class="page-head"><span class="eyebrow">Kvalitet</span><h1>Kvalitetssystem — ISO 9001</h1><p>Aaland Bil arbeider etter ISO 9001-prinsipper. Kvalitetssjef er ansvarlig for vedlikehold av systemet.</p></div>
+  <div class="card">
+    <div class="lbl">De syv kvalitetsprinsippene</div>
+    <ol><li>Kundefokus</li><li>Lederskap</li><li>Engasjerte medarbeidere</li><li>Prosesstilnærming</li><li>Forbedring</li><li>Faktabasert beslutningstaking</li><li>Relasjonsledelse</li></ol>
+    <div class="lbl">Dokumentstruktur</div>
+    <ul><li>Nivå 1 — Kvalitetshåndbok</li><li>Nivå 2 — Prosessbeskrivelser</li><li>Nivå 3 — Rutiner og arbeidsbeskrivelser</li><li>Nivå 4 — Skjemaer, sjekklister og registre</li></ul>
+  </div>
+</section>
+
+<!-- ============ SYKEFRAVÆR ============ -->
+<section id="sykefravar">
+  <div class="page-head"><span class="eyebrow">HR &amp; HMS</span><h1>Sykefravær og egenmelding</h1></div>
+  <div class="card">
+    <div class="lbl">Når du blir syk</div>
+    <ol><li>Meld fra senest kl. 08:30 til nærmeste leder via telefon.</li><li>Oppgi forventet varighet.</li><li>Avtal hvem som dekker dine arbeidsoppgaver.</li><li>Registrer i Visma samme dag.</li></ol>
+    <div class="lbl">Egenmelding</div>
+    <ul><li>Inntil 3 kalenderdager om gangen, maks 24 dager per 12-måneders periode.</li><li>Krever IA-avtale — Aaland Bil er IA-bedrift.</li></ul>
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a class="btn primary sm" href="https://connect.visma.com" target="_blank">Åpne Visma</a>
+      <a class="btn line sm" href="../06_HR_HMS/HR-01_Sykefravar_og_egenmelding.docx">Full rutine</a>
+      <a class="btn line sm" href="#" data-sec="sykefravar-oppfolging">Oppfølging sykmeldte</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OPPFØLGING SYKMELDTE ============ -->
+<section id="sykefravar-oppfolging">
+  <div class="page-head"><span class="eyebrow">HR &amp; HMS</span><h1>Oppfølging av sykmeldte</h1><p>Steg for steg fra dag 1 til 1 års sykmelding — for ledere og ansatte.</p></div>
+  <div class="card">
+    <h3 class="ct">Tidslinje</h3>
+    <div class="tl">
+      <div class="ev"><div class="tt">Dag 1–3</div><div class="td">Egenmelding. Nærmeste leder ringer fortløpende. Fravær registreres i Visma.</div></div>
+      <div class="ev"><div class="tt">Innen 4 uker</div><div class="td">Oppfølgingsplan utarbeides sammen med arbeidstaker, formidles til sykmelder.</div></div>
+      <div class="ev"><div class="tt">Innen 7 uker — Dialogmøte 1</div><div class="td">Møte mellom arbeidsgiver og sykmeldt. Sykmelder, tillitsvalgt, BHT og NAV kan delta.</div></div>
+      <div class="ev"><div class="tt">Innen 8 uker</div><div class="td">Lege skriver utvidet legeerklæring. NAV vurderer kravet om arbeidsrelatert aktivitet.</div></div>
+      <div class="ev"><div class="tt">Innen 26 uker — Dialogmøte 2</div><div class="td">Arrangeres av NAV. Oppdatert oppfølgingsplan sendes inn senest 1 uke før.</div></div>
+      <div class="ev"><div class="tt">Ved 1 års sykmelding</div><div class="td">Avklaring av tilbakekomst. Vern mot oppsigelse i 12 måneder fra arbeidsuførheten inntrådte.</div></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px;border-left:3px solid var(--accent);">
+    <span class="eyebrow">Skjema MAL-08</span>
+    <h3 class="ct" style="margin:6px 0 8px;">Informasjon til behandlende lege</h3>
+    <p style="font-size:13px;color:var(--muted);">Skjema som ansatt tar med til legen. Beskriver Aaland Bils tilretteleggingsmuligheter per stillingsgruppe slik at legen kan vurdere gradert sykmelding fremfor full.</p>
+    <div class="lbl">Slik bruker du skjemaet</div>
+    <ol><li>Skriv ut skjemaet og fyll inn kontaktinfo til HR og BHT.</li><li>Ta skjemaet med til legekonsultasjonen.</li><li>Lege krysser av og signerer.</li><li>Lever signert skjema tilbake til HR. Du beholder en kopi.</li></ol>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a class="btn primary sm" href="../08_Maler_og_skjemaer/Tilretteleggingsskjema_lege.docx">Last ned skjema</a>
+      <a class="btn line sm" href="../06_HR_HMS/HR-05_Oppfolging_sykmeldte.docx">Full rutine</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FERIE ============ -->
+<section id="ferie">
+  <div class="page-head"><span class="eyebrow">HR &amp; Visma</span><h1>Ferie og permisjon</h1><p>Søknader om ferie og fravær gjøres direkte i Visma Calendar.</p></div>
+  <div class="grid g2">
+    <a class="card" href="https://connect.visma.com" target="_blank" style="display:block;">
+      <span class="eyebrow">Visma Calendar</span>
+      <h3 class="ct" style="margin:6px 0 8px;">Søk ferie</h3>
+      <p style="font-size:13px;color:var(--muted);">Du tas direkte til Visma sin webportal hvor du registrerer fravær og søker ferie. Søknaden går automatisk til din leder.</p>
+      <div style="margin-top:12px;font-size:11px;color:var(--faint);">connect.visma.com — krever Visma-pålogging</div>
+    </a>
+    <div class="card">
+      <span class="eyebrow">Visma Employee</span>
+      <h3 class="ct" style="margin:6px 0 8px;">Søk via mobil</h3>
+      <p style="font-size:13px;color:var(--muted);">Registrer ferie og fravær fra mobilen. Oversikt over feriebalanse og lønnsslipp. Søk «Visma Employee» i App Store eller Play Store.</p>
+    </div>
+  </div>
+  <div class="sec-head"><h2>Slik søker du</h2><span class="meta">Fire steg</span></div>
+  <div class="steps">
+    <div class="step"><div class="sn">1</div><h4>Logg inn</h4><p>Gå til connect.visma.com eller åpne mobilappen.</p></div>
+    <div class="step"><div class="sn">2</div><h4>Velg fravær</h4><p>Klikk Fravær / Ferie i menyen.</p></div>
+    <div class="step"><div class="sn">3</div><h4>Registrer dato</h4><p>Velg fra- og til-dato. Du ser feriedager du har igjen.</p></div>
+    <div class="step"><div class="sn">4</div><h4>Send</h4><p>Søknaden sendes automatisk til leder for godkjenning.</p></div>
+  </div>
+  <div class="card" style="margin-top:18px;">
+    <div class="grid g2">
+      <div><div class="lbl">Frister</div><ul><li>Sommerferie (juni–august): innen 1. mars</li><li>Juleferie: innen 1. november</li><li>Annen ferie: minst 14 dager før</li></ul></div>
+      <div><div class="lbl">Ferierett</div><ul><li>30 virkedager (5 uker) per år</li><li>3 ukers sammenhengende hovedferie 1.6–30.9</li><li>Velferdspermisjon med lønn ved bryllup, dødsfall, flytting</li></ul></div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a class="btn primary sm" href="https://connect.visma.com" target="_blank">Søk ferie i Visma</a>
+      <a class="btn line sm" href="../06_HR_HMS/HR-02_Ferie_og_permisjon.docx">Full rutine</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HMS ============ -->
+<section id="hms">
+  <div class="page-head"><span class="eyebrow">HR &amp; HMS</span><h1>Helse, miljø og sikkerhet</h1></div>
+  <div class="card">
+    <div class="grid g2">
+      <div><div class="lbl">Organisering</div><ul><li>HMS-ansvarlig: Daglig leder</li><li>Verneombud: velges hvert 2. år</li><li>AMU: 2 fra arbeidsgiver, 2 fra ansatte</li></ul></div>
+      <div><div class="lbl">Akuttberedskap</div><ul><li>Brann: 110</li><li>Politi: 112</li><li>Ambulanse: 113</li><li>Møteplass: parkeringsplass øst</li></ul></div>
+    </div>
+    <div class="lbl">Faste rutiner</div>
+    <ul><li>Vernerunde i alle avdelinger to ganger per år</li><li>Risikovurdering oppdateres årlig</li><li>Brannøvelse en gang per år</li><li>HMS-kurs for nyansatte innen 14 dager</li></ul>
+  </div>
+</section>
+
+<!-- ============ PARKERING ============ -->
+<section id="parkering">
+  <div class="page-head"><span class="eyebrow">Generell info</span><h1>Parkering</h1><p>Fargekoder for parkeringsområdene på vår eiendom i Brusdalsvegen 205. Alle ansatte har ansvar for å følge reglene.</p></div>
+  <div class="grid g2">
+    <div class="cblock"><div class="ch"><div class="sw" style="background:#d9a528;"></div><h3>Gult område — Kunder</h3></div><div class="cb"><ul><li>Kun for kunder til verksted</li><li>Ingen nye eller brukte biler</li><li>Ingen privatbiler tilhørende ansatte</li><li>Kun kort stopp ved reelt behov</li></ul></div></div>
+    <div class="cblock"><div class="ch"><div class="sw" style="background:#9c1f28;"></div><h3>Rødt område — Lagerbiler</h3></div><div class="cb"><ul><li>Kun nye og brukte biler til salgs</li><li>Skal stå innenfor oppmerkede felt</li></ul></div></div>
+    <div class="cblock"><div class="ch"><div class="sw" style="background:#2f7d4f;"></div><h3>Grønt område — Ansatte</h3></div><div class="cb"><ul><li>Kun privatbiler tilhørende ansatte</li><li>Gjelder alle avdelinger</li><li>Privatbiler skal ikke stå på andre områder</li></ul></div></div>
+    <div class="cblock"><div class="ch"><div class="sw" style="background:#2f5e9c;"></div><h3>Blått område — Lading</h3></div><div class="cb"><ul><li>Kun biler til salg eller ettermarked</li><li>Maks parkeringstid: 1 arbeidsdag</li><li>Bilen flyttes når lading er ferdig</li></ul></div></div>
+  </div>
+  <div class="note" style="margin-top:16px;">
+    <h3>Akuttbiler</h3>
+    <p>Skal kun stå på anvist plass og flyttes så snart situasjonen tillater det. Følg prosessbeskrivelsen i Excel-arket hos kundemottak.</p>
+  </div>
+  <div class="card" style="margin-top:14px;">
+    <div class="lbl">Ansvar</div>
+    <p>Alle ansatte har ansvar for å følge reglene. Bistå med å flytte biler ved behov, eller gi beskjed til leder for avdeling brukt/nybil eller ettermarked. Målet er god tilgjengelighet for kundene og orden på uteområdet som et ledd i god kundeservice.</p>
+    <div style="margin-top:14px;"><a class="btn line sm" href="../06_HR_HMS/HMS-07_Parkeringsregler.docx">Full rutine</a></div>
+  </div>
+</section>
+
+<!-- ============ DATABRILLER ============ -->
+<section id="databriller">
+  <div class="page-head"><span class="eyebrow">HR / Specsavers</span><h1>Databriller</h1><p>Arbeidsgiver dekker synsundersøkelse og databriller for ansatte som arbeider regelmessig ved skjerm.</p></div>
+  <div class="card">
+    <div class="lbl">Slik går du frem</div>
+    <ol><li>Last ned rekvisisjonsskjema.</li><li>Fyll ut alle felt om arbeidsdagen din.</li><li>Få skjemaet signert av leder.</li><li>Bestill time hos Specsavers.</li><li>Du betaler selv og får refundert via lønn.</li></ol>
+    <div class="lbl">Priser dekket</div>
+    <table class="tbl">
+      <tr><th>Produkt</th><th>Pris</th></tr>
+      <tr><td>Synsundersøkelse inkl. OCT</td><td>545 kr</td></tr>
+      <tr><td>Enstyrke databriller</td><td>995 kr</td></tr>
+      <tr><td>Dataprogressive briller</td><td>2 495 kr</td></tr>
+      <tr><td>Premium databriller</td><td>3 195 kr</td></tr>
+    </table>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a class="btn primary sm" href="../06_HR_HMS/Rekvisisjon_databriller.pdf" target="_blank">Rekvisisjon (PDF)</a>
+      <a class="btn line sm" href="https://www.specsavers.no" target="_blank">Bestill time</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GENERELL INFO ============ -->
+<section id="generell-info">
+  <div class="page-head"><span class="eyebrow">For alle ansatte</span><h1>Generell informasjon</h1><p>Praktisk informasjon som gjelder alle ansatte — lønn, pensjon, forsikring, arbeidsklær og parkering.</p></div>
+  <div class="grid g3">
+    <a class="tile" href="#" data-sec="lonn-pensjon"><div class="ico">@wallet</div><h3>Lønn og pensjon</h3><p>Lønn etterskuddsvis. DNB pensjonssparing 3 %.</p></a>
+    <a class="tile" href="#" data-sec="afp"><div class="ico">@cal</div><h3>AFP-ordning</h3><p>Avtalefestet pensjon fra fylte 62 år.</p></a>
+    <a class="tile" href="#" data-sec="forsikring"><div class="ico">@shield</div><h3>Personalforsikring</h3><p>If — yrkesskade, fritidsulykke, psykologisk førstehjelp.</p></a>
+    <a class="tile" href="#" data-sec="arbeidsklaer"><div class="ico">@shirt</div><h3>Arbeidsklær</h3><p>Profilklær fra Ide House of Brands, verkstedklær fra Würth.</p></a>
+    <a class="tile" href="#" data-sec="parkering"><div class="ico">@park</div><h3>Parkering</h3><p>Fargekoder for parkeringsområdene.</p></a>
+    <a class="tile" href="#" data-sec="sykefravar-oppfolging"><div class="ico">@clip</div><h3>Oppfølging sykmeldte</h3><p>Steg-for-steg fra dag 1 til 1 års sykmelding.</p></a>
+  </div>
+</section>
+
+<!-- ============ LØNN OG PENSJON ============ -->
+<section id="lonn-pensjon">
+  <div class="page-head"><span class="eyebrow">Generell info</span><h1>Lønn og pensjon</h1></div>
+  <div class="grid g2">
+    <div class="card"><h3 class="ct">Lønn</h3><ul><li>Lønn utbetales etterskuddsvis den 15. hver måned.</li><li>Faller den 15. på helg: utbetaling siste virkedag før.</li><li>Lønnsslipp digitalt via Visma.</li><li>Feriepenger 12 % utbetales i juni.</li><li>Overtid og tillegg avregnes på første ordinære lønnskjøring.</li></ul></div>
+    <div class="card"><h3 class="ct">Pensjon — DNB pensjonssparing</h3><ul><li>Aaland Bil setter inn 3 % av lønnen i pensjonssparing.</li><li>Innskuddspensjonsavtale hos DNB.</li><li>Innmelding skjer automatisk ved ansettelse.</li><li>Logg inn på dnb.no eller DNB-appen for å se sparing og prognose.</li></ul><div style="margin-top:12px;"><a class="btn line sm" href="https://www.dnb.no" target="_blank">Åpne DNB</a></div></div>
+  </div>
+  <div style="margin-top:16px;"><a class="btn line sm" href="../11_Generell_info/INFO-02_Lonn_og_pensjon.docx">Full rutine</a></div>
+</section>
+
+<!-- ============ AFP ============ -->
+<section id="afp">
+  <div class="page-head"><span class="eyebrow">Generell info</span><h1>AFP-ordning</h1><p>Aaland Bil er tilsluttet AFP-ordningen i privat sektor — avtalefestet pensjon fra fylte 62 år.</p></div>
+  <div class="card">
+    <div class="lbl">Hva er AFP</div>
+    <p>AFP er en livsvarig tilleggspensjon utbetalt fra fylte 62 år. Den kommer i tillegg til alderspensjon fra folketrygden og innskuddspensjonen hos DNB.</p>
+    <div class="lbl">Hvem har rett</div>
+    <ul><li>Minst 7 av siste 9 år i AFP-tilsluttet bedrift før du fyller 62 år.</li><li>Andre kvalifikasjonskrav etter regelverket til Fellesordningen for AFP.</li></ul>
+    <div class="lbl">Hvordan søke</div>
+    <ol><li>Snakk med HR-ansvarlig i god tid før 62-årsdagen.</li><li>Søknad sendes via NAV eller Fellesordningen for AFP.</li><li>Komplett regelverk på afp.no.</li></ol>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a class="btn primary sm" href="https://www.afp.no" target="_blank">Les mer på afp.no</a>
+      <a class="btn line sm" href="../11_Generell_info/INFO-02_Lonn_og_pensjon.docx">Full rutine</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FORSIKRING ============ -->
+<section id="forsikring">
+  <div class="page-head"><span class="eyebrow">Generell info</span><h1>Personalforsikring i If</h1><p>Som ansatt er du forsikret gjennom If Skadeforsikring. Avtalenummer SP7218027, gjelder fra 01.01.2026.</p></div>
+  <div class="grid g3">
+    <div class="card"><h3 class="ct" style="font-size:15px;">Yrkesskade</h3><p style="font-size:12.5px;color:var(--muted);">Ulykke og sykdom på arbeidsstedet.</p><ul><li>Ervervsuførhet: 22 G</li><li>Dødsfall: 15,5 G</li><li>Mén: 4,5 G</li></ul></div>
+    <div class="card"><h3 class="ct" style="font-size:15px;">Fritidsulykke</h3><p style="font-size:12.5px;color:var(--muted);">Ulykker som skjer i fritiden.</p><ul><li>Ervervsuførhet: 22 G</li><li>Dødsfall: 15,5 G</li><li>Medisinske utgifter i 4 år</li></ul></div>
+    <div class="card"><h3 class="ct" style="font-size:15px;">Psykologisk førstehjelp</h3><p style="font-size:12.5px;color:var(--muted);">Inntil 10 timer hos psykolog.</p><ul><li>Vold, ran, ulykke, dødsfall</li><li>Egen alvorlig sykdom</li><li>Også for husstandsmedlemmer</li></ul></div>
+    <div class="card"><h3 class="ct" style="font-size:15px;">Medisinsk rådgivning</h3><p style="font-size:12.5px;color:var(--muted);">Døgnåpen rådgivningstjeneste hos If — også for familiemedlemmer.</p></div>
+    <div class="card"><h3 class="ct" style="font-size:15px;">Reise hjem–arbeid</h3><p style="font-size:12.5px;color:var(--muted);">Yrkesskadedekning utvidet til direkte reise mellom hjem og arbeidssted.</p></div>
+    <div class="card"><h3 class="ct" style="font-size:15px;">Friskere arbeidsplass</h3><p style="font-size:12.5px;color:var(--muted);">Forebyggende digital helsetjeneste fra If.</p></div>
+  </div>
+  <div class="card" style="margin-top:14px;">
+    <div class="lbl">Slik melder du skade</div>
+    <ol><li>Mindre skader: kontakt If på 21 49 24 00 eller via if.no/kontakt.</li><li>Alvorlige hendelser: varsle nærmeste leder umiddelbart.</li><li>HR-ansvarlig bistår med dokumentasjon og oppfølging.</li></ol>
+    <p style="font-size:11.5px;color:var(--faint);margin-top:10px;">G = grunnbeløpet i folketrygden, justeres 1. mai hvert år.</p>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a class="btn primary sm" href="../11_Generell_info/Forsikringsbevis_IF_2026.pdf" target="_blank">Forsikringsbevis (PDF)</a>
+      <a class="btn line sm" href="../11_Generell_info/INFO-01_Personalforsikring_IF.docx">Sammendrag</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ARBEIDSKLÆR ============ -->
+<section id="arbeidsklaer">
+  <div class="page-head"><span class="eyebrow">Generell info</span><h1>Arbeidsklær og profilklær</h1><p>Bestilling av profilklær og verkstedklær. Avklar alltid med leder før du bestiller.</p></div>
+  <div class="grid g2">
+    <div class="card">
+      <span class="eyebrow">Profilklær</span>
+      <h3 class="ct" style="margin:6px 0 8px;">Ide House of Brands Ålesund</h3>
+      <p style="font-size:13px;color:var(--muted);">Skjorter, gensere, jakker og polo med Aaland-profil. Vår kontaktperson har all info om logo og fargeprofil.</p>
+      <table class="tbl" style="margin-top:12px;">
+        <tr><td style="width:90px;color:var(--faint);">Kontakt</td><td style="font-weight:600;color:var(--ink);">Rune Sunde</td></tr>
+        <tr><td style="color:var(--faint);">Telefon</td><td>+47 23 31 01 80</td></tr>
+        <tr><td style="color:var(--faint);">E-post</td><td>Rune@idegroup.no</td></tr>
+        <tr><td style="color:var(--faint);">Web</td><td>idegroup.no</td></tr>
+      </table>
+      <div style="margin-top:12px;"><a class="btn primary sm" href="mailto:Rune@idegroup.no?subject=Bestilling profilklær – Aaland Bil">Send bestilling</a></div>
+    </div>
+    <div class="card">
+      <span class="eyebrow">Verkstedklær</span>
+      <h3 class="ct" style="margin:6px 0 8px;">Würth — mekanikere</h3>
+      <p style="font-size:13px;color:var(--muted);">Kjeledress, t-skjorter, vernesko og hansker. Bestilling koordineres av verksmester for å samle bestillinger.</p>
+      <div class="lbl">Standard pakke nyansatt mekaniker</div>
+      <ul><li>2 kjeledresser</li><li>5 t-skjorter</li><li>1 par vernesko</li><li>Hansker</li></ul>
+      <div style="margin-top:12px;"><a class="btn line sm" href="https://www.wurth.no" target="_blank">Åpne wurth.no</a></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px;">
+    <div class="lbl">Slik bestiller du</div>
+    <ol><li>Avklar behov med nærmeste leder.</li><li>Profilklær: send størrelse og ønske til Rune Sunde med kopi til markedsansvarlig.</li><li>Verkstedklær: meld behov til verksmester som samler bestillinger.</li><li>Verneutstyr utleveres gratis — se HMS-02 Verneutstyr.</li></ol>
+    <div style="margin-top:12px;"><a class="btn line sm" href="../11_Generell_info/INFO-03_Bestilling_arbeidsklaer.docx">Full rutine</a></div>
+  </div>
+</section>
+
+<!-- ============ SYSTEMER ============ -->
+<section id="systemer">
+  <div class="page-head"><span class="eyebrow">Verktøy</span><h1>Systemer og snarveier</h1></div>
+  <div class="grid g3" id="systemgrid"></div>
+</section>
+
+<!-- ============ SIGNATUR ============ -->
+<section id="signatur">
+  <div class="page-head"><span class="eyebrow">Profil</span><h1>E-postsignatur</h1><p>Alle ansatte skal bruke standardisert e-postsignatur.</p></div>
+  <div class="note" style="margin-bottom:16px;">
+    <h3>Merkelogo er plassholdere</h3>
+    <p>Forhandlerlogoene i malen er plassholdere. Markedsansvarlig henter offisielle MG-, Opel-, Citroën- og Subaru-logoer fra hver produsents mediekit før signaturen rulles ut.</p>
+  </div>
+  <div class="card">
+    <div style="border:1px solid var(--line);border-radius:var(--radius);padding:22px;background:var(--surface-alt);">
+      <table style="border-collapse:collapse;"><tr>
+        <td style="padding-right:20px;border-right:3px solid var(--accent);vertical-align:middle;">
+          <img src="assets/aaland_logo_signature.svg" alt="Aaland Bil" width="180" style="display:block;">
+        </td>
+        <td style="padding-left:20px;font-size:12.5px;color:var(--ink-2);line-height:1.7;">
+          <div style="font-size:15px;font-weight:700;color:var(--ink);">[Fornavn Etternavn]</div>
+          <div style="color:var(--muted);margin-bottom:6px;">[Stilling]</div>
+          Direkte: +47 XX XX XX XX<br>Sentralbord: 70 15 86 00<br>fornavn.etternavn@aaland.no<br>aaland.no · Brusdalsvegen 205, 6011 Ålesund
+        </td>
+      </tr></table>
+    </div>
+    <div class="lbl">Slik installerer du signaturen</div>
+    <ol><li>Åpne HTML-malen i nettleser.</li><li>Marker hele signatur-tabellen og kopier.</li><li>Outlook → Fil → Alternativer → E-post → Signaturer → Ny.</li><li>Lim inn og fyll inn dine opplysninger.</li><li>Sett som standard for nye meldinger og svar.</li></ol>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a class="btn primary sm" href="../08_Maler_og_skjemaer/Signatur_mal.html" target="_blank">Åpne HTML-mal</a>
+      <a class="btn line sm" href="../06_HR_HMS/HR-04_E_postsignatur.docx">Full rutine</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MALER ============ -->
+<section id="maler">
+  <div class="page-head"><span class="eyebrow">Bibliotek</span><h1>Maler og skjemaer</h1></div>
+  <div class="card">
+    <table class="tbl">
+      <tr><th>Dokument</th><th>Kategori</th><th>Oppdatert</th><th></th></tr>
+      <tr><td>Avviksskjema</td><td>Kvalitet</td><td>11.05.2026</td><td><a class="btn line sm" href="../07_Avvikssystem/Avviksskjema.docx">Last ned</a></td></tr>
+      <tr><td>Egenmeldingsskjema</td><td>HR</td><td>11.05.2026</td><td><a class="btn line sm" href="../08_Maler_og_skjemaer/Egenmelding_skjema.docx">Last ned</a></td></tr>
+      <tr><td>Ferie- og permisjonssøknad</td><td>HR</td><td>11.05.2026</td><td><a class="btn line sm" href="../08_Maler_og_skjemaer/Ferie_permisjon_skjema.docx">Last ned</a></td></tr>
+      <tr><td>Innbytteavtale</td><td>Salg</td><td>11.05.2026</td><td><a class="btn line sm" href="../08_Maler_og_skjemaer/Innbytteavtale_mal.docx">Last ned</a></td></tr>
+      <tr><td>Prøvekjøringsavtale</td><td>Salg</td><td>11.05.2026</td><td><a class="btn line sm" href="../08_Maler_og_skjemaer/Provekjoringsavtale_mal.docx">Last ned</a></td></tr>
+      <tr><td>Leveringsprotokoll</td><td>Salg</td><td>11.05.2026</td><td><a class="btn line sm" href="../08_Maler_og_skjemaer/Leveringsprotokoll_mal.docx">Last ned</a></td></tr>
+      <tr><td>Overleveringsskjema elbil</td><td>Salg / Elbil</td><td>13.05.2026</td><td><a class="btn line sm" href="../12_Elbil_overlevering/SAL-08_Overleveringsskjema_elbil.docx">Last ned</a></td></tr>
+      <tr><td>Tilretteleggingsskjema lege</td><td>HR / Sykefravær</td><td>13.05.2026</td><td><a class="btn line sm" href="../08_Maler_og_skjemaer/Tilretteleggingsskjema_lege.docx">Last ned</a></td></tr>
+      <tr><td>Sjekkliste vernerunde</td><td>HMS</td><td>11.05.2026</td><td><a class="btn line sm" href="../08_Maler_og_skjemaer/Sjekkliste_vernerunde.docx">Last ned</a></td></tr>
+      <tr><td>Lånebilavtale</td><td>Kundemottak</td><td>11.05.2026</td><td><a class="btn line sm" href="../08_Maler_og_skjemaer/Lanebilavtale_mal.docx">Last ned</a></td></tr>
+      <tr><td>E-postsignatur</td><td>Verktøy</td><td>11.05.2026</td><td><a class="btn line sm" href="../08_Maler_og_skjemaer/Signatur_mal.html">Last ned</a></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ ROLLER ============ -->
+<section id="roller">
+  <div class="page-head"><span class="eyebrow">Organisasjon</span><h1>Rollebeskrivelser</h1></div>
+  <div class="card">
+    <table class="tbl">
+      <tr><th>Rolle</th><th>Avdeling</th><th>Rapporterer til</th><th></th></tr>
+      <tr><td>Daglig leder</td><td>Ledelse</td><td>Styret</td><td><a class="btn line sm" href="../10_Rollebeskrivelser/Rollebeskrivelse_Daglig_leder.docx">Les</a></td></tr>
+      <tr><td>Kvalitetssjef</td><td>Stab</td><td>Daglig leder</td><td><a class="btn line sm" href="../10_Rollebeskrivelser/Rollebeskrivelse_Kvalitetssjef.docx">Les</a></td></tr>
+      <tr><td>Salgsleder</td><td>Salg</td><td>Daglig leder</td><td><a class="btn line sm" href="../10_Rollebeskrivelser/Rollebeskrivelse_Salgsleder.docx">Les</a></td></tr>
+      <tr><td>Selger</td><td>Salg</td><td>Salgsleder</td><td><a class="btn line sm" href="../10_Rollebeskrivelser/Rollebeskrivelse_Selger.docx">Les</a></td></tr>
+      <tr><td>Bruktbilsjef</td><td>Salg</td><td>Salgsleder</td><td><a class="btn line sm" href="../10_Rollebeskrivelser/Rollebeskrivelse_Bruktbilsjef.docx">Les</a></td></tr>
+      <tr><td>Servicesjef</td><td>Kundemottak</td><td>Daglig leder</td><td><a class="btn line sm" href="../10_Rollebeskrivelser/Rollebeskrivelse_Servicesjef.docx">Les</a></td></tr>
+      <tr><td>Servicerådgiver</td><td>Kundemottak</td><td>Servicesjef</td><td><a class="btn line sm" href="../10_Rollebeskrivelser/Rollebeskrivelse_Serviceradgiver.docx">Les</a></td></tr>
+      <tr><td>Verksmester</td><td>Verksted</td><td>Daglig leder</td><td><a class="btn line sm" href="../10_Rollebeskrivelser/Rollebeskrivelse_Verksmester.docx">Les</a></td></tr>
+      <tr><td>Mekaniker</td><td>Verksted</td><td>Verksmester</td><td><a class="btn line sm" href="../10_Rollebeskrivelser/Rollebeskrivelse_Mekaniker.docx">Les</a></td></tr>
+      <tr><td>Delesjef</td><td>Delelager</td><td>Daglig leder</td><td><a class="btn line sm" href="../10_Rollebeskrivelser/Rollebeskrivelse_Delesjef.docx">Les</a></td></tr>
+      <tr><td>Delemedarbeider</td><td>Delelager</td><td>Delesjef</td><td><a class="btn line sm" href="../10_Rollebeskrivelser/Rollebeskrivelse_Delemedarbeider.docx">Les</a></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ KONTAKT ============ -->
+<section id="kontakt">
+  <div class="page-head"><span class="eyebrow">Adressebok</span><h1>Kontakt og telefonliste</h1></div>
+  <div class="card">
+    <h3 class="ct">Direkte telefoner</h3>
+    <table class="tbl">
+      <tr><th>Navn</th><th>Stilling</th><th>Direkte</th><th>E-post</th></tr>
+      <tr><td>Petter Aaland</td><td>Daglig leder</td><td>70 15 86 01</td><td>petter@aaland.no</td></tr>
+      <tr><td>[Navn]</td><td>Kvalitetssjef</td><td>70 15 86 02</td><td>kvalitet@aaland.no</td></tr>
+      <tr><td>[Navn]</td><td>Salgsleder</td><td>70 15 86 10</td><td>salg@aaland.no</td></tr>
+      <tr><td>[Navn]</td><td>Servicesjef</td><td>70 15 86 20</td><td>service@aaland.no</td></tr>
+      <tr><td>[Navn]</td><td>Verksmester</td><td>70 15 86 30</td><td>verksted@aaland.no</td></tr>
+      <tr><td>[Navn]</td><td>Delesjef</td><td>70 15 86 40</td><td>deler@aaland.no</td></tr>
+      <tr><td>Knut Frisvoll</td><td>Forsikringssaker (DBS)</td><td></td><td>knut@aaland.no</td></tr>
+      <tr><td>Riemo Eisma</td><td>Forsikringssaker (DBS)</td><td></td><td>riemo@aaland.no</td></tr>
+    </table>
+  </div>
+</section>
+
+<div class="footer">
+  <div class="fi"><b class="serif">Aaland Bil AS — siden 1947</b><br><span>Brusdalsvegen 205, 6011 Ålesund · 70 15 86 00 · aaland.no</span></div>
+  <div class="fv">Intranett v2.0 · Eier: Kvalitetssjef · Oppdatert 21.05.2026</div>
+</div>
+
+</main>
+</div>
+
+<div id="saved">Endringer lagret</div>
+
+<script>
+// ===== ICON LIBRARY =====
+const I = {
+  home:'<path d="M3 11l9-8 9 8M5 9.5V21h14V9.5"/>',
+  news:'<path d="M4 5h13v15H4zM17 8h3v9a3 3 0 01-3 3M8 9h6M8 13h6M8 17h4"/>',
+  tag:'<path d="M3 7v6l9 9 7-7-9-9H3z"/><circle cx="7.5" cy="10.5" r="1.5"/>',
+  car:'<path d="M5 13l1.5-5h11L19 13M5 13h14v5H5zM5 13l-1 1v3h1M19 13l1 1v3h-1"/><circle cx="8" cy="18" r="1.5"/><circle cx="16" cy="18" r="1.5"/>',
+  bell:'<path d="M18 9a6 6 0 10-12 0c0 6-3 8-3 8h18s-3-2-3-8M10 21a2 2 0 004 0"/>',
+  wrench:'<path d="M14 7a4 4 0 00-5 5l-6 6 3 3 6-6a4 4 0 005-5l-3 3-3-3 3-3z"/>',
+  box:'<path d="M3 8l9-5 9 5v8l-9 5-9-5V8zM3 8l9 5 9-5M12 13v8"/>',
+  bolt:'<path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/>',
+  alert:'<path d="M12 3l10 17H2L12 3zM12 9v5M12 17v.5"/>',
+  chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  badge:'<path d="M12 2l2.5 2 3.5-.5 1 3.4 3 2-1.5 3.1 1.5 3.1-3 2-1 3.4-3.5-.5L12 22l-2.5-2-3.5.5-1-3.4-3-2L3.5 12 2 8.9l3-2 1-3.4 3.5.5L12 2z"/><path d="M9 12l2 2 4-4"/>',
+  pulse:'<path d="M3 12h4l2-6 4 12 2-6h6"/>',
+  clip:'<path d="M9 4h6v3H9zM7 5H5v16h14V5h-2M9 12h6M9 16h4"/>',
+  cal:'<path d="M4 6h16v15H4zM4 10h16M8 3v4M16 3v4"/>',
+  shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/>',
+  park:'<path d="M5 3h14v18H5zM9 17V7h4a3 3 0 010 6H9"/>',
+  eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+  link:'<path d="M10 13a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1.5 1.5M14 11a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1.5-1.5"/>',
+  mail:'<path d="M3 6h18v12H3zM3 7l9 6 9-6"/>',
+  file:'<path d="M14 3H6v18h12V7l-4-4zM14 3v4h4"/>',
+  users:'<circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5M16 5a3.5 3.5 0 010 7M21 20c0-3-2-4.5-4.5-5"/>',
+  phone:'<path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 1.9.6 2.8a2 2 0 01-.5 2.1L8 11a16 16 0 006 6l1.4-1.1a2 2 0 012.1-.5c.9.3 1.8.5 2.8.6a2 2 0 011.7 2z"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5"/>',
+  wallet:'<path d="M3 7h15a2 2 0 012 2v8a2 2 0 01-2 2H4a1 1 0 01-1-1V7zM3 7l13-3 1 3M17 13h2"/>',
+  shirt:'<path d="M8 3l4 3 4-3 5 4-3 3-1-1v12H7V9L6 10 3 7z"/>',
+  grid:'<path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/>',
+  dl:'<path d="M12 3v12M7 11l5 5 5-5M5 21h14"/>',
+  arrow:'<path d="M5 12h14M13 5l7 7-7 7"/>',
+  chev:'<path d="M6 9l6 6 6-6"/>'
+};
+function svg(name){return '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(I[name]||'')+'</svg>';}
+
+// inject @icon placeholders
+document.body.innerHTML = document.body.innerHTML.replace(/@(\w+)/g,(m,n)=>I[n]?svg(n):m);
+
+// ===== SIDEBAR =====
+const NAV = [
+  ['Hjem',[['forside','Forside','home'],['nyheter','Nyheter','news'],['kampanjer','Kampanjer','tag']]],
+  ['Avdelinger',[['salg','Salg','car'],['kundemottak','Kundemottak','bell'],['verksted','Verksted','wrench'],['delelager','Delelager','box'],['elbil','Elbil — overlevering','bolt']]],
+  ['Kvalitet',[['avvik-meld','Meld avvik','alert'],['avvik-register','Avviksregister','chart'],['iso','ISO 9001','badge']]],
+  ['HR & HMS',[['sykefravar','Sykefravær','pulse'],['sykefravar-oppfolging','Oppfølging sykmeldte','clip'],['ferie','Ferie og permisjon','cal'],['hms','HMS','shield'],['parkering','Parkering','park'],['databriller','Databriller','eye']]],
+  ['Generell info',[['generell-info','Oversikt','info'],['lonn-pensjon','Lønn og pensjon','wallet'],['afp','AFP-ordning','cal'],['forsikring','Personalforsikring','shield'],['arbeidsklaer','Arbeidsklær','shirt']]],
+  ['Verktøy',[['systemer','Systemer','grid'],['signatur','E-postsignatur','mail'],['maler','Maler og skjemaer','file'],['roller','Rollebeskrivelser','users'],['kontakt','Kontakt','phone']]]
+];
+const sb = document.getElementById('sidebar');
+NAV.forEach(g=>{
+  const h=document.createElement('div');h.className='grp';h.textContent=g[0];sb.appendChild(h);
+  g[1].forEach(([id,label,icon])=>{
+    const a=document.createElement('a');a.className='nav';a.href='#';a.dataset.sec=id;
+    a.innerHTML=svg(icon)+'<span>'+label+'</span>';
+    sb.appendChild(a);
+  });
+});
+
+// ===== QUICK TILES =====
+const QT=[
+  ['avvik-meld','alert','Meld avvik','Registrer avvik, klage eller forbedring'],
+  ['ferie','cal','Søk ferie','Direkte til Visma Calendar'],
+  ['elbil','bolt','Elbil-overlevering','Skjema, Q&A og håndbok'],
+  ['signatur','mail','E-postsignatur','Standard for alle ansatte'],
+  ['databriller','eye','Databriller','Rekvisisjon Specsavers'],
+  ['maler','file','Maler og skjemaer','Avtaler, kontrakter, sjekklister'],
+  ['generell-info','info','Generell info','Lønn, pensjon, forsikring, klær'],
+  ['systemer','grid','Systemer','Cars, BOS, Visma, Teams']
+];
+const qt=document.getElementById('quicktiles');
+QT.forEach(([sec,icon,t,p])=>{
+  const a=document.createElement('a');a.className='tile';a.href='#';a.dataset.sec=sec;
+  a.innerHTML='<div class="ico">'+svg(icon)+'</div><h3>'+t+'</h3><p>'+p+'</p>';
+  qt.appendChild(a);
+});
+
+// ===== SYSTEM LINKS =====
+const SYS=[
+  ['https://connect.visma.com','Visma Calendar','Ferie, fravær, timeregistrering','cal'],
+  ['https://login.bos.no','BOS CRM / DBS','Bertel O. Steen forhandlerportal','car'],
+  ['#','Cars','Verkstedsystem — ordre, timer, fakturering','wrench'],
+  ['https://teams.microsoft.com','Microsoft Teams','Chat, møter og intranett','grid'],
+  ['https://outlook.office.com','Outlook','E-post — Office 365','mail'],
+  ['https://www.aaland.no','aaland.no','Vår offentlige hjemmeside','link'],
+  ['https://www.nav.no','NAV','Sykmelding og A-melding','shield'],
+  ['https://www.altinn.no','Altinn','Offentlig innrapportering','file'],
+  ['https://www.specsavers.no','Specsavers','Bestilling av databriller','eye']
+];
+const sg=document.getElementById('systemgrid');
+SYS.forEach(([url,t,d,icon])=>{
+  const a=document.createElement('a');a.className='lk';a.href=url;if(url.startsWith('http'))a.target='_blank';
+  a.innerHTML='<div class="lki">'+svg(icon)+'</div><div class="lkt"><b>'+t+'</b><span>'+d+'</span></div><div class="lka">'+svg('arrow')+'</div>';
+  sg.appendChild(a);
+});
+
+// ===== CAMPAIGN CARDS =====
+const KAMP=[
+  ['MG S5 EV Long Range','MG · Elektrisk SUV','Fra 289 900,–','0,00 % rente · eller utstyr 20 000,–','480 km WLTP, Apple CarPlay, oppvarmet ratt.','https://www.aaland.no/mgs5-ev'],
+  ['MG IM5','MG · Luxury EV','1,99 % rente','eller utstyr 20 000,–','Tidløs design, intelligent teknologi.','https://www.aaland.no/mg-im5'],
+  ['MG S6 EV','MG · Familie-SUV','0,00 % rente','eller utstyr 20 000,–','Firehjulstrekk og klasseledende plass.','https://www.aaland.no/mgs6'],
+  ['MG IM6','MG · Luksus-SUV','0,00 % rente','eller utstyr 30 000,–','Ekstrem ytelse og raffinert luksus.','https://www.aaland.no/mg-im6'],
+  ['MG 4 Electric','MG · Kompaktbil','0,00 % rente','Vinterhjul inkludert','450 km rekkevidde, smart teknologi.','https://www.aaland.no/mg4-kampanje'],
+  ['Opel Astra Electric','Opel · Elektrisk','Fra 399 900,–','156 hk · 418 km','Kombi og stasjonsvogn — begge elektriske.','https://www.aaland.no/opelastraelectric'],
+  ['Opel Corsa Electric','Opel · Elektrisk','Fra 344 900,–','2,99 % fastrente','Storbilteknologi i kompakt format. 402 km.','https://www.aaland.no/opelcorsaelectric'],
+  ['Opel Mokka Electric','Opel · Elektrisk SUV','3 års fastpris leasing','','156 hk, 403 km, hurtiglading 100 kW.','https://www.aaland.no/opelmokka'],
+  ['Subaru Solterra','Subaru · Elektrisk','Symmetrisk e-AWD','X-Mode for terreng','Trygg og fremkommelig elektrisk SUV.','https://www.aaland.no/subaru-solterra']
+];
+const kg=document.getElementById('kampanjegrid');
+KAMP.forEach(([t,cat,o1,o2,desc,url])=>{
+  const d=document.createElement('div');d.className='card';
+  d.innerHTML='<span class="eyebrow">'+cat+'</span>'+
+    '<h3 class="ct" style="margin:6px 0 10px;font-size:16px;">'+t+'</h3>'+
+    '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">'+
+    '<span class="pill dn">'+o1+'</span>'+(o2?'<span class="pill" style="background:var(--bg-alt);color:var(--ink-2);">'+o2+'</span>':'')+'</div>'+
+    '<p style="font-size:12.5px;color:var(--muted);">'+desc+'</p>'+
+    '<div style="margin-top:12px;"><a class="btn line sm" href="'+url+'" target="_blank">Se hos aaland.no</a></div>';
+  kg.appendChild(d);
+});
+
+// ===== NAVIGATION =====
+const secs=document.querySelectorAll('section');
+function show(id){
+  secs.forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el)el.classList.add('active');
+  document.querySelectorAll('.sidebar a.nav,.topbar nav a').forEach(a=>{
+    a.classList.toggle('active',a.dataset.sec===id);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-sec]');
+  if(t){e.preventDefault();show(t.dataset.sec);}
+});
+
+// ===== ROUTINE TOGGLE =====
+function tr(h){h.parentElement.classList.toggle('open');}
+
+// ===== EDIT =====
+let edit=false;
+function toggleEdit(){
+  edit=!edit;
+  document.querySelectorAll('.editable').forEach(e=>e.contentEditable=edit);
+  if(!edit){
+    const d={};document.querySelectorAll('.editable').forEach((e,i)=>d['e'+i]=e.innerHTML);
+    try{localStorage.setItem('aaland_v2',JSON.stringify(d));
+      const n=document.getElementById('saved');n.style.display='block';
+      setTimeout(()=>n.style.display='none',1500);}catch(e){}
+  }
+}
+try{
+  const raw=localStorage.getItem('aaland_v2');
+  if(raw){const d=JSON.parse(raw);
+    document.querySelectorAll('.editable').forEach((e,i)=>{if(d['e'+i]!==undefined)e.innerHTML=d['e'+i];});}
+}catch(e){}
+
+function lagreAvvik(e){e.preventDefault();alert('Avvik registrert. I produksjonsversjonen sendes meldingen til kvalitetssjef.');e.target.reset();}
+
+// ===== SEARCH =====
+document.getElementById('search').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase();
+  if(q.length<2){document.querySelectorAll('.rt').forEach(r=>r.style.display='');return;}
+  document.querySelectorAll('.rt').forEach(r=>{
+    r.style.display=r.innerText.toLowerCase().includes(q)?'':'none';
+  });
+});
+
+// ===== CAROUSEL =====
+const slides=document.querySelectorAll('.slide');
+const dots=document.getElementById('dots');
+const bar=document.getElementById('carbar');
+let cur=0,timer,prog;
+const DUR=6500;
+slides.forEach((s,i)=>{
+  if(s.dataset.img)s.style.backgroundImage="url('"+s.dataset.img+"')";
+  const d=document.createElement('div');d.className='d'+(i===0?' active':'');
+  d.onclick=()=>goto(i);dots.appendChild(d);
+});
+function goto(i){
+  slides[cur].classList.remove('active');dots.children[cur].classList.remove('active');
+  cur=(i+slides.length)%slides.length;
+  slides[cur].classList.add('active');dots.children[cur].classList.add('active');
+  resetbar();
+}
+function nextSlide(){goto(cur+1);restart();}
+function prevSlide(){goto(cur-1);restart();}
+function resetbar(){
+  clearInterval(prog);bar.style.width='0%';let e=0;
+  prog=setInterval(()=>{e+=50;bar.style.width=(e/DUR*100)+'%';if(e>=DUR)clearInterval(prog);},50);
+}
+function start(){resetbar();timer=setInterval(()=>goto(cur+1),DUR);}
+function restart(){clearInterval(timer);start();}
+const carousel=document.getElementById('carousel');
+carousel.addEventListener('mouseenter',()=>{clearInterval(timer);clearInterval(prog);bar.style.width='0%';});
+carousel.addEventListener('mouseleave',start);
+start();
+</script>
+</body>
+</html>
